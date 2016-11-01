@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Nick Youngblut" />
+
+<meta name="date" content="2016-11-01" />
+
+<title>Quantifying isotope incorporation</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Quantifying isotope incorporation</h1>
+<h4 class="author"><em>Nick Youngblut</em></h4>
+<h4 class="date"><em>2016-11-01</em></h4>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>There are two prevaling methods for using HTS-SIP data to estimate the amount of isotope that each OTU incorporated:</p>
+<ul>
+<li>q-SIP</li>
+<li>delta_BD (a complementary analysis to HR-SIP)
+<ul>
+<li>Note: delta_BD is formally written as: <span class="math inline">\(\Delta\hat{BD}\)</span></li>
+</ul></li>
+</ul>
+<p>In this vignette, we are going to show how to run both analyses and also compare the results a bit.</p>
+</div>
+<div id="dataset" class="section level1">
+<h1>Dataset</h1>
+<p>First, let’s load some packages including <code>HTSSIP</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(HTSSIP)</code></pre></div>
+<p>OK. We’re going to be using 2 data files:</p>
+<ul>
+<li>HTS-SIP data (phyloseq format)</li>
+<li>qPCR data (total 16S rRNA gene copies per gradient fraction)</li>
+</ul>
+<p>We’ll be using the dataset that we simulated in the <a href="./HTSSIP_sim.html">HTSSIP_sim</a> vignette.</p>
+<p>The phyloseq object is similar to the dataset in the other vignettes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># HTS-SIP data</span>
+physeq_rep3</code></pre></div>
+<pre><code>## phyloseq-class experiment-level object
+## otu_table()   OTU Table:         [ 6 taxa and 144 samples ]
+## sample_data() Sample Data:       [ 144 samples by 4 sample variables ]</code></pre>
+<p>The associated qPCR data is a list of length = 2.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># qPCR data (list object)</span>
+physeq_rep3_qPCR %&gt;%<span class="st"> </span>names</code></pre></div>
+<pre><code>## [1] &quot;raw&quot;     &quot;summary&quot;</code></pre>
+<p>For the analyses in this vignette, we only need the ‘summary’ table.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># qPCR data (list object)</span>
+physeq_rep3_qPCR_sum =<span class="st"> </span>physeq_rep3_qPCR$summary
+physeq_rep3_qPCR_sum %&gt;%<span class="st"> </span><span class="kw">head</span>(<span class="dt">n=</span><span class="dv">4</span>)</code></pre></div>
+<pre><code>##   IS_CONTROL                Sample Buoyant_density qPCR_tech_rep_mean
+## 1      FALSE 13C-Glu_rep1_1.671712        1.671712           46598172
+## 2      FALSE 13C-Glu_rep1_1.671722        1.671722           42299449
+## 3      FALSE 13C-Glu_rep1_1.680311        1.680311           53536519
+## 4      FALSE 13C-Glu_rep1_1.683540        1.683540           51449609
+##   qPCR_tech_rep_sd     Gradient Treatment Replicate
+## 1          9055833 13C-Glu_rep1   13C-Glu         1
+## 2         16369298 13C-Glu_rep1   13C-Glu         1
+## 3         18265667 13C-Glu_rep1   13C-Glu         1
+## 4          3796576 13C-Glu_rep1   13C-Glu         1</code></pre>
+</div>
+<div id="q-sip" class="section level1">
+<h1>q-SIP</h1>
+<p>OK. Let’s quantify isotope incorporation witht the q-SIP method.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># transforming OTU counts</span>
+physeq_rep3_t =<span class="st"> </span><span class="kw">OTU_qPCR_trans</span>(physeq_rep3, physeq_rep3_qPCR_sum)
+
+<span class="co"># calculating atom fraction excess</span>
+atomX =<span class="st"> </span><span class="kw">qSIP_atom_excess</span>(physeq_rep3_t,
+                         <span class="dt">control_expr=</span><span class="st">'Treatment==&quot;12C-Con&quot;'</span>,
+                         <span class="dt">treatment_rep=</span><span class="st">'Replicate'</span>)
+atomX %&gt;%<span class="st"> </span>names</code></pre></div>
+<pre><code>## [1] &quot;W&quot; &quot;A&quot;</code></pre>
+<p>The resulting list object contains 2 data.frames. We are interested in the ‘A’ table, which contains estimated BD shifts (Z) and atom fraction excess (A).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">atomX$A %&gt;%<span class="st"> </span><span class="kw">head</span>(<span class="dt">n=</span><span class="dv">4</span>)</code></pre></div>
+<pre><code>## # A tibble: 4 x 9
+##     OTU     Wlab   Wlight          Z        Gi   Mlight Mheavymax     Mlab
+##   &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 OTU.1 1.721357 1.699178 0.02217880 0.6361398 308.0065  317.6638 312.0268
+## 2 OTU.2 1.706713 1.694977 0.01173549 0.5858298 307.9816  317.6640 310.1139
+## 3 OTU.3 1.731520 1.696813 0.03470620 0.6078171 307.9925  317.6639 314.2921
+## 4 OTU.4 1.730946 1.704892 0.02605395 0.7045621 308.0405  317.6636 312.7479
+## # ... with 1 more variables: A &lt;dbl&gt;</code></pre>
+<p>Next, let’s calculate bootstrap confidence intervales for the atom fraction excess estimations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculating bootstrapped CI values</span>
+df_atomX_boot =<span class="st"> </span><span class="kw">qSIP_bootstrap</span>(atomX, <span class="dt">n_boot=</span><span class="dv">100</span>)
+df_atomX_boot %&gt;%<span class="st"> </span><span class="kw">head</span>(<span class="dt">n=</span><span class="dv">4</span>)</code></pre></div>
+<pre><code>## # A tibble: 4 x 11
+##     OTU     Wlab   Wlight          Z        Gi   Mlight Mheavymax     Mlab
+##   &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 OTU.1 1.721357 1.699178 0.02217880 0.6361398 308.0065  317.6638 312.0268
+## 2 OTU.2 1.706713 1.694977 0.01173549 0.5858298 307.9816  317.6640 310.1139
+## 3 OTU.3 1.731520 1.696813 0.03470620 0.6078171 307.9925  317.6639 314.2921
+## 4 OTU.4 1.730946 1.704892 0.02605395 0.7045621 308.0405  317.6636 312.7479
+## # ... with 3 more variables: A &lt;dbl&gt;, A_CI_low &lt;dbl&gt;, A_CI_high &lt;dbl&gt;</code></pre>
+</div>
+<div id="delta_bd" class="section level1">
+<h1>delta_BD</h1>
+<p>Now for delta_BD. The setup is easier because we are not using qPCR data, just relative abundances from 16S rRNA sequence data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_dBD =<span class="st"> </span><span class="kw">delta_BD</span>(physeq_rep3, <span class="dt">control_expr=</span><span class="st">'Treatment==&quot;12C-Con&quot;'</span>)
+df_dBD %&gt;%<span class="st"> </span><span class="kw">head</span>(<span class="dt">n=</span><span class="dv">4</span>)</code></pre></div>
+<pre><code>## # A tibble: 4 x 4
+##     OTU CM_control CM_treatment   delta_BD
+##   &lt;chr&gt;      &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;
+## 1 OTU.1   1.694039     1.720068 0.02602886
+## 2 OTU.2   1.690518     1.703567 0.01304861
+## 3 OTU.3   1.686954     1.743139 0.05618481
+## 4 OTU.4   1.705739     1.726582 0.02084385</code></pre>
+</div>
+<div id="comparing-results" class="section level1">
+<h1>Comparing results</h1>
+<p>Let’s plot the data and compare all of the results. First, let’s join all of the data into one table for plotting. We’ll also format it for plotting.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># checking &amp; joining data </span>
+<span class="kw">stopifnot</span>(<span class="kw">nrow</span>(df_atomX_boot) ==<span class="st"> </span><span class="kw">nrow</span>(df_dBD))
+df_j =<span class="st"> </span>dplyr::<span class="kw">inner_join</span>(df_atomX_boot, df_dBD, <span class="kw">c</span>(<span class="st">'OTU'</span>=<span class="st">'OTU'</span>))
+<span class="kw">stopifnot</span>(<span class="kw">nrow</span>(df_atomX_boot) ==<span class="st"> </span><span class="kw">nrow</span>(df_j))
+
+<span class="co"># formatting data for plotting</span>
+df_j =<span class="st"> </span>df_j %&gt;%
+<span class="st">  </span>dplyr::<span class="kw">mutate</span>(<span class="dt">OTU =</span> <span class="kw">reorder</span>(OTU, -delta_BD))</code></pre></div>
+<p>OK. Time to plot!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plotting BD shift (Z)</span>
+<span class="kw">ggplot</span>(df_j, <span class="kw">aes</span>(OTU, Z)) +
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.5</span>, <span class="dt">color=</span><span class="st">'blue'</span>) +
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y=</span>delta_BD), <span class="dt">color=</span><span class="st">'red'</span>, <span class="dt">size=</span><span class="fl">0.5</span>) +
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept=</span><span class="dv">0</span>, <span class="dt">linetype=</span><span class="st">'dashed'</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">'OTU'</span>, <span class="dt">y=</span><span class="st">'BD shift (Z)'</span>) +
+<span class="st">  </span><span class="kw">theme_bw</span>() +
+<span class="st">  </span><span class="kw">theme</span>(
+    <span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>()
+  )</code></pre></div>
+<p><img src="data:image/png;base64,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" alt /><!-- --></p>
+<p>In the figure, red points are delta_BD and blue points are q-SIP. It’s easy to see that delta_BD is a lot more variable than q-SIP. This is likely due to a high influence of compositional data artifacts on delta_BD versus q-SIP.</p>
+<p>Let’s make a boxplot to show the difference in estimation variance between the two methods.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plotting BD shift (Z): boxplots</span>
+
+## formatting the table
+df_j_g =<span class="st"> </span>df_j %&gt;%
+<span class="st">  </span>dplyr::<span class="kw">select</span>(OTU, Z, delta_BD) %&gt;%
+<span class="st">  </span>tidyr::<span class="kw">gather</span>(Method, BD_shift, Z, delta_BD)
+
+## plotting 
+<span class="kw">ggplot</span>(df_j_g, <span class="kw">aes</span>(Method, BD_shift)) +
+<span class="st">  </span><span class="kw">geom_boxplot</span>() +
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept=</span><span class="dv">0</span>, <span class="dt">linetype=</span><span class="st">'dashed'</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">'Method'</span>, <span class="dt">y=</span><span class="st">'BD shift (Z)'</span>) +
+<span class="st">  </span><span class="kw">theme_bw</span>() </code></pre></div>
+<p><img src="data:image/png;base64,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" alt /><!-- --></p>
+<p>The boxplot helps to summarize how much more variance delta_BD produces versus q-SIP.</p>
+</div>
+<div id="session-info" class="section level1">
+<h1>Session info</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.2.4 Revised (2016-03-16 r70336)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu precise (12.04.5 LTS)
+## 
+## locale:
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=C              
+##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] phyloseq_1.14.0 HTSSIP_1.0.3    ggplot2_2.1.0   tidyr_0.5.1    
+## [5] dplyr_0.5.0    
+## 
+## loaded via a namespace (and not attached):
+##  [1] Biobase_2.30.0             splines_3.2.4             
+##  [3] foreach_1.4.3              Formula_1.2-1             
+##  [5] assertthat_0.1             stats4_3.2.4              
+##  [7] latticeExtra_0.6-28        yaml_2.1.13               
+##  [9] RSQLite_1.0.0              lattice_0.20-33           
+## [11] chron_2.3-47               digest_0.6.10             
+## [13] GenomicRanges_1.22.4       RColorBrewer_1.1-2        
+## [15] XVector_0.10.0             colorspace_1.2-6          
+## [17] htmltools_0.3.5            Matrix_1.2-6              
+## [19] plyr_1.8.4                 XML_3.98-1.4              
+## [21] DESeq2_1.10.1              genefilter_1.52.1         
+## [23] zlibbioc_1.16.0            xtable_1.8-2              
+## [25] scales_0.4.0               BiocParallel_1.4.3        
+## [27] annotate_1.48.0            tibble_1.1                
+## [29] mgcv_1.8-12                IRanges_2.4.8             
+## [31] SummarizedExperiment_1.0.2 nnet_7.3-12               
+## [33] BiocGenerics_0.16.1        lazyeval_0.2.0            
+## [35] survival_2.39-5            RJSONIO_1.3-0             
+## [37] magrittr_1.5               evaluate_0.9              
+## [39] doParallel_1.0.10          nlme_3.1-128              
+## [41] MASS_7.3-45                RcppArmadillo_0.7.100.3.1 
+## [43] foreign_0.8-66             vegan_2.4-0               
+## [45] tools_3.2.4                data.table_1.9.6          
+## [47] formatR_1.4                stringr_1.0.0             
+## [49] S4Vectors_0.8.11           locfit_1.5-9.1            
+## [51] munsell_0.4.3              cluster_2.0.4             
+## [53] AnnotationDbi_1.32.3       lambda.r_1.1.7            
+## [55] Biostrings_2.38.4          ade4_1.7-4                
+## [57] compiler_3.2.4             GenomeInfoDb_1.6.3        
+## [59] futile.logger_1.4.1        grid_3.2.4                
+## [61] coenocliner_0.2-2          iterators_1.0.8           
+## [63] biom_0.3.12                igraph_1.0.1              
+## [65] labeling_0.3               rmarkdown_1.0             
+## [67] gtable_0.2.0               codetools_0.2-14          
+## [69] multtest_2.26.0            DBI_0.4-1                 
+## [71] reshape2_1.4.1             R6_2.1.2                  
+## [73] gridExtra_2.2.1            knitr_1.13                
+## [75] Hmisc_3.17-4               futile.options_1.0.0      
+## [77] permute_0.9-0              ape_3.5                   
+## [79] stringi_1.1.1              parallel_3.2.4            
+## [81] Rcpp_0.12.5                geneplotter_1.48.0        
+## [83] rpart_4.1-10               acepack_1.3-3.3</code></pre>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
