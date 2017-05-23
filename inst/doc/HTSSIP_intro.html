@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -12,7 +12,7 @@
 
 <meta name="author" content="Nick Youngblut" />
 
-<meta name="date" content="2016-11-01" />
+<meta name="date" content="2017-05-23" />
 
 <title>HTSSIP introduction</title>
 
@@ -70,10 +70,28 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">HTSSIP introduction</h1>
 <h4 class="author"><em>Nick Youngblut</em></h4>
-<h4 class="date"><em>2016-11-01</em></h4>
+<h4 class="date"><em>2017-05-23</em></h4>
 
 
+<div id="TOC">
+<ul>
+<li><a href="#hts-sip-introduction">HTS-SIP introduction</a><ul>
+<li><a href="#background">Background</a><ul>
+<li><a href="#stable-isotope-probing">Stable Isotope Probing</a></li>
+<li><a href="#hts-sip">HTS-SIP</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#htssip-package-data">HTSSIP package data</a><ul>
+<li><a href="#experiment-overview">Experiment overview</a></li>
+<li><a href="#sample-metadata">Sample metadata</a></li>
+<li><a href="#parsing-the-dataset">Parsing the dataset</a></li>
+</ul></li>
+<li><a href="#references-for-methods-in-htssip">References for methods in HTSSIP</a></li>
+<li><a href="#session-info">Session info</a></li>
+</ul>
+</div>
 
+<hr />
 <p><strong>HTSSIP</strong> is a package for analyzing high throughput sequence (HTS) data from DNA- or RNA-based stable isotope probing (SIP) experiments.</p>
 <p>I recommend starting with this introductory vignette, then checking out the other vignettes:</p>
 <ul>
@@ -104,10 +122,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li>e.g., Which bacteria contribute to each step of biomass breakdown in soil?</li>
 </ul></li>
-<li><strong>the prevalence of functional redundancy and community stability (resilience and resistance)</strong>
-<ul>
-<li>e.g., Do many microbes consume the same substrates? How can this affect stability of the microbial community and the ecosystem processes mediated by members of the community?</li>
-</ul></li>
 <li><strong>taxonomic conservatism of ecological roles</strong>
 <ul>
 <li>e.g., Is taxonomic relatedness a good predictor of functional similarity (similar niche)?</li>
@@ -121,6 +135,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li>e.g., Is the biogeography distribution of cellulose specialists more patchy than carbon source generalists?</li>
 </ul></li>
+<li><strong>the prevalence of functional redundancy and community stability (resilience and resistance)</strong>
+<ul>
+<li>e.g., Do many microbes consume the same substrates? How can this affect stability of the microbial community and the ecosystem processes mediated by members of the community?</li>
+</ul></li>
 </ul>
 <div id="background" class="section level2">
 <h2>Background</h2>
@@ -128,14 +146,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="stable-isotope-probing" class="section level3">
 <h3>Stable Isotope Probing</h3>
 <p>In theory, if a taxon incorporates isotopically labeled substrate, then its DNA with be ‘heavier’ than if that same taxon had instead incorporated unlabeled substrate. By ‘heavier’, I mean that the DNA with have a higher buoyant density (BD) in a CsCl gradient. So, if you were to load isotopically labeled DNA into one CsCl gradient and unlabeled DNA (from the same taxon) in another CsCl gradient, then the labeled DNA with appear shifted to a heavier BD than the unlabeled DNA. The DNA should be more or less normally distributed in each gradient, so picture a Gaussian distribution that shifts from a ‘light’ BD to a ‘heavy’ BD between the control and treatment gradients. This is the basics of stable isotope probing, which is a powerful method because it can be used to detect which taxa <em>in an entire community</em> consumed particular substrates (e.g., cellulose).</p>
-<p>If ‘heavy’ DNA is shifted from ‘light’ DNA, why are both a control and treatment gradient needed instead of just carefully separating out the ‘heavy’ DNA band from the ‘light’ DNA band in just one gradient. While this technique used be done in older SIP papers, the main problem is the BD of DNA is also a factor of G+C content. DNA with a higher G+C content has a ‘heavier’ BD. So, labeled, low G+C DNA can easily overlap with unlabeled high G+C DNA.</p>
+<p>If ‘heavy’ DNA is shifted from ‘light’ DNA, why are both a control and treatment gradient needed instead of just carefully separating out the ‘heavy’ DNA band from the ‘light’ DNA band in just one gradient? While this technique used be done in older SIP studies, the main problem is the BD of DNA is also a factor of G+C content (&amp; some other factors). DNA with a higher G+C content has a ‘heavier’ BD. So, labeled, low G+C DNA can easily overlap with unlabeled high G+C DNA.</p>
 <p>Let’s consider a simple DNA-SIP experiment. A basic SIP experiment could consist of incubating aliquots of soil with either 13C-glucose (treatment) or 12C-glucose (the corresponding control). The DNA is then extracted from each soil sample, and heavy DNA is separated (at least partially) from light DNA using CsCl gradient ultra centrifugation. Now, the challenge is to accurately determine the location of each taxon’s DNA in each of the 2 gradients in order to identify which taxa ‘shifted’ in the labeled treatment gradient due to isotope incorporation. Prior to the rise of high throughput sequencing (HTS) methods, this task was very difficult due to the limited throughput and taxonomic resolution of molecular fingerprinting and Sanger sequencing.</p>
 </div>
 <div id="hts-sip" class="section level3">
 <h3>HTS-SIP</h3>
 <p>With high throughput sequencing, the taxonomic composition can be assessed at many points along a CsCl gradient by fractionating the gradient and sequencing the DNA in each fraction (note: I’m just going to focus on 16S rRNA sequencing, but fungal-ITS or metagenomic sequencing are also effective HTS-SIP methods). A large number of gradient fractions can be sequenced, which can help pinpoint the exact BD density range that each OTU occupies. For a typical HR-SIP experiment, ~20-30 fractions from each gradient are often sequenced.</p>
 <p>Now remember, we are trying to use HTS-SIP to identify ‘BD shifts’, which indicate isotope incorporation. This is done by comparing labeled-treatment gradients to their corresponding unlabeled control gradients. Optimally, we’d be able to measure the <em>absolute</em> abundance of each taxon’s OTU in each gradient fraction in order to get an idea where the Gaussian distribution of that OTU’s DNA is in the gradient.</p>
-<p>The major challenge of analyzing HTS data is that the data is compositional, in that the total number of sequences in a sample does not provide any information on the total numbers of each taxon in the sample. This is why relative abundances of OTUs are shown in at least most microbiome papers, such as the relative abundance bar plots in A LOT of microbiome papers. Therefore, we have to try to determine the absolute abundance Gaussian distributions of each OTU in each gradient based on compositional 16S rRNA sequence data. Various HTS-SIP data analysis methods have be developed to address this challenge (e.g., HR-SIP and q-SIP). This R package was developed to easily implement on your own data, so that you can compare the results (and possible develop new methods). For more information on SIP and HTS-SIP, check out these references:</p>
+<p>The major challenge of analyzing HTS data is that the data is compositional, in that the total number of sequences in a sample does not provide any information on the total numbers of each taxon in the sample. This is why relative abundances of OTUs are shown in most microbiome papers. Therefore, we have to try to determine the absolute abundance Gaussian distributions of each OTU in each gradient based on compositional 16S rRNA sequence data. Various HTS-SIP data analysis methods have be developed to address this challenge (e.g., HR-SIP and q-SIP). This R package was developed to easily implement on your own data, so that you can compare the results (and possible develop new methods). For more information on SIP and HTS-SIP, check out these references:</p>
 <ul>
 <li><strong>DNA SIP</strong>
 <ul>
@@ -199,8 +217,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3>Sample metadata</h3>
 <p>Here’s a look at (some) of the sample metadata. Note that <code>Bouyant_density</code> is one of the columns. This is necessary for many of the analyses in <code>HTSSIP}</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">physeq_S2D2 %&gt;%<span class="st"> </span>sample_data %&gt;%<span class="st"> </span>.[<span class="dv">1</span>:<span class="dv">4</span>,<span class="dv">1</span>:<span class="dv">10</span>]</code></pre></div>
-<pre><code>## Sample Data:        [4 samples by 10 sample variables]:
-##                              X.Sample primer_number fwd_barcode
+<pre><code>##                              X.Sample primer_number fwd_barcode
 ## 12C-Con.D14.R1_F17 12C-Con.D14.R1_F17            38    CGTGAGTG
 ## 13C-Cel.D3.R1_F21   13C-Cel.D3.R1_F21             7    GGATATCT
 ## 13C-Cel.D3.R1_F20   13C-Cel.D3.R1_F20             6    CGTGAGTG
@@ -219,8 +236,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Our phyloseq object should be formatted correctly (no errors)</span>
 physeq_S2D2 =<span class="st"> </span><span class="kw">physeq_format</span>(physeq_S2D2)
 physeq_S2D2 %&gt;%<span class="st"> </span>sample_data %&gt;%<span class="st"> </span>.[<span class="dv">1</span>:<span class="dv">4</span>,<span class="dv">1</span>:<span class="dv">10</span>]</code></pre></div>
-<pre><code>## Sample Data:        [4 samples by 10 sample variables]:
-##                              X.Sample primer_number fwd_barcode
+<pre><code>##                              X.Sample primer_number fwd_barcode
 ## 12C-Con.D14.R1_F17 12C-Con.D14.R1_F17            38    CGTGAGTG
 ## 13C-Cel.D3.R1_F21   13C-Cel.D3.R1_F21             7    GGATATCT
 ## 13C-Cel.D3.R1_F20   13C-Cel.D3.R1_F20             6    CGTGAGTG
@@ -238,8 +254,7 @@ physeq_S2D2 %&gt;%<span class="st"> </span>sample_data %&gt;%<span class="st"> <
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This phyloseq object should NOT be formatted correctly </span>
 <span class="kw">data</span>(GlobalPatterns)
 GlobalPatterns %&gt;%<span class="st"> </span>sample_data %&gt;%<span class="st"> </span>.[<span class="dv">1</span>:<span class="dv">4</span>,<span class="dv">1</span>:<span class="kw">ncol</span>(.)]</code></pre></div>
-<pre><code>## Sample Data:        [4 samples by 7 sample variables]:
-##         X.SampleID  Primer Final_Barcode Barcode_truncated_plus_T
+<pre><code>##         X.SampleID  Primer Final_Barcode Barcode_truncated_plus_T
 ## CL3            CL3 ILBC_01        AACGCA                   TGCGTT
 ## CC1            CC1 ILBC_02        AACTCG                   CGAGTT
 ## SV1            SV1 ILBC_03        AACTGT                   ACAGTT
@@ -338,7 +353,7 @@ physeq_S2D2_l</code></pre></div>
 <ul>
 <li><strong>HTS-SIP data exploration</strong>
 <ul>
-<li>Multiple window High Resolution Stable Isotope Probing (MW-HR-SIP) as described in Youngblut and Buckley <em>in review</em></li>
+<li>Multiple window High Resolution Stable Isotope Probing (MW-HR-SIP) as described in <a href="http://biorxiv.org/content/early/2017/05/17/138719">Youngblut and Buckley 2017</a></li>
 </ul></li>
 <li><strong>HR-SIP</strong>
 <ul>
@@ -346,7 +361,7 @@ physeq_S2D2_l</code></pre></div>
 </ul></li>
 <li><strong>MW-HR-SIP</strong>
 <ul>
-<li>Multiple window High Resolution Stable Isotope Probing (MW-HR-SIP) as described in Youngblut and Buckley <em>in review</em></li>
+<li>Multiple window High Resolution Stable Isotope Probing (MW-HR-SIP) as described in <a href="http://biorxiv.org/content/early/2017/05/17/138719">Youngblut and Buckley 2017</a></li>
 </ul></li>
 <li><strong>q-SIP</strong>
 <ul>
@@ -357,9 +372,9 @@ physeq_S2D2_l</code></pre></div>
 <div id="session-info" class="section level1">
 <h1>Session info</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
-<pre><code>## R version 3.2.4 Revised (2016-03-16 r70336)
+<pre><code>## R version 3.3.3 (2017-03-06)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu precise (12.04.5 LTS)
+## Running under: Ubuntu 16.04.2 LTS
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -373,29 +388,29 @@ physeq_S2D2_l</code></pre></div>
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] phyloseq_1.14.0 HTSSIP_1.0.3    ggplot2_2.1.0   tidyr_0.5.1    
+## [1] phyloseq_1.19.1 HTSSIP_1.1.1    ggplot2_2.2.1   tidyr_0.6.1    
 ## [5] dplyr_0.5.0    
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] reshape2_1.4.1      splines_3.2.4       lattice_0.20-33    
-##  [4] colorspace_1.2-6    htmltools_0.3.5     stats4_3.2.4       
-##  [7] yaml_2.1.13         mgcv_1.8-12         chron_2.3-47       
-## [10] survival_2.39-5     DBI_0.4-1           BiocGenerics_0.16.1
-## [13] foreach_1.4.3       plyr_1.8.4          stringr_1.0.0      
-## [16] zlibbioc_1.16.0     Biostrings_2.38.4   munsell_0.4.3      
-## [19] gtable_0.2.0        codetools_0.2-14    evaluate_0.9       
-## [22] labeling_0.3        Biobase_2.30.0      knitr_1.13         
-## [25] permute_0.9-0       IRanges_2.4.8       parallel_3.2.4     
-## [28] Rcpp_0.12.5         scales_0.4.0        formatR_1.4        
-## [31] vegan_2.4-0         S4Vectors_0.8.11    XVector_0.10.0     
-## [34] digest_0.6.10       stringi_1.1.1       RJSONIO_1.3-0      
-## [37] grid_3.2.4          ade4_1.7-4          tools_3.2.4        
-## [40] magrittr_1.5        lazyeval_0.2.0      tibble_1.1         
-## [43] cluster_2.0.4       ape_3.5             MASS_7.3-45        
-## [46] Matrix_1.2-6        biom_0.3.12         data.table_1.9.6   
-## [49] assertthat_0.1      rmarkdown_1.0       iterators_1.0.8    
-## [52] R6_2.1.2            multtest_2.26.0     igraph_1.0.1       
-## [55] nlme_3.1-128        compiler_3.2.4</code></pre>
+##  [1] reshape2_1.4.2      splines_3.3.3       lattice_0.20-35    
+##  [4] rhdf5_2.18.0        colorspace_1.3-2    htmltools_0.3.5    
+##  [7] stats4_3.3.3        yaml_2.1.14         mgcv_1.8-17        
+## [10] survival_2.41-3     DBI_0.6-1           BiocGenerics_0.20.0
+## [13] foreach_1.4.3       plyr_1.8.4          stringr_1.2.0      
+## [16] zlibbioc_1.20.0     Biostrings_2.42.1   munsell_0.4.3      
+## [19] gtable_0.2.0        codetools_0.2-15    evaluate_0.10      
+## [22] labeling_0.3        Biobase_2.34.0      knitr_1.15.1       
+## [25] permute_0.9-4       IRanges_2.8.2       biomformat_1.2.0   
+## [28] parallel_3.3.3      Rcpp_0.12.10        scales_0.4.1       
+## [31] backports_1.0.5     vegan_2.4-3         S4Vectors_0.12.2   
+## [34] jsonlite_1.4        XVector_0.14.1      digest_0.6.12      
+## [37] stringi_1.1.5       grid_3.3.3          ade4_1.7-6         
+## [40] rprojroot_1.2       tools_3.3.3         magrittr_1.5       
+## [43] lazyeval_0.2.0      tibble_1.3.0        cluster_2.0.6      
+## [46] ape_4.1             MASS_7.3-45         Matrix_1.2-8       
+## [49] data.table_1.10.4   assertthat_0.2.0    rmarkdown_1.4      
+## [52] iterators_1.0.8     R6_2.2.0            multtest_2.30.0    
+## [55] igraph_1.0.1        nlme_3.1-131        compiler_3.3.3</code></pre>
 </div>
 
 
