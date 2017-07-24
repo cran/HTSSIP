@@ -15,7 +15,7 @@ physeq_S2D2_l = phyloseq_subset(physeq_S2D2, params, ex)
 physeq_S2D2_l
 
 ## ----BD_shift_wmean------------------------------------------------------
-wmean1 = BD_shift(physeq_S2D2_l[[2]])
+wmean1 = BD_shift(physeq_S2D2_l[[2]], nperm=5)
 cat('Subset:', names(physeq_S2D2_l)[2], '\n')
 wmean1 %>% head(n=3)
 
@@ -28,15 +28,15 @@ ggplot(wmean1, aes(BD_min.x, wmean_dist)) +
   theme_bw() 
 
 ## ----wmean---------------------------------------------------------------
-wmean = plyr::ldply(physeq_S2D2_l, BD_shift)
+wmean = plyr::ldply(physeq_S2D2_l, BD_shift, nperm=5)
 wmean %>% head(n=3)
 
 ## ----shift_plot, fig.height=5, fig.width=7-------------------------------
 # formatting the treatment names to look a bit better as facet labels
 wmean = wmean %>%
   mutate(Substrate = gsub('.+(13C-[A-z]+).+', '\\1', .id),
-         Day = gsub('.+Day ==[ \']*([0-9]+).+', '\\1', .id),
-         Day = Day %>% reorder(Day %>% as.numeric))
+         Day = gsub('.+Day ==[ \']*([0-9]+).+', 'Day \\1', .id),
+         Day = Day %>% reorder(gsub('Day ', '', Day) %>% as.numeric))
 
 # plotting, with facetting by 13C-treatment
 ggplot(wmean, aes(BD_min.x, wmean_dist)) +

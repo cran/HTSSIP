@@ -50,9 +50,9 @@ df_j = df_j %>%
 
 ## ---- fig.height=3, fig.width=7------------------------------------------
 # plotting BD shift (Z)
-ggplot(df_j, aes(OTU, Z)) +
-  geom_point(size=0.5, color='blue') +
-  geom_point(aes(y=delta_BD), color='red', size=0.5) +
+ggplot(df_j, aes(OTU)) +
+  geom_point(aes(y=Z), color='blue') +
+  geom_point(aes(y=delta_BD), color='red') +
   geom_hline(yintercept=0, linetype='dashed', alpha=0.5) +
   labs(x='OTU', y='BD shift (Z)') +
   theme_bw() +

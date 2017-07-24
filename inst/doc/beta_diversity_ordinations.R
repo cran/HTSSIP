@@ -30,7 +30,8 @@ physeq_S2D2_l_df %>% .$phyloseq_subset %>% unique
 
 ## ------------------------------------------------------------------------
 physeq_S2D2_l_df = physeq_S2D2_l_df %>%
-  dplyr::mutate(phyloseq_subset = gsub(' \\| ', '\n', phyloseq_subset))
+  dplyr::mutate(phyloseq_subset = gsub(' \\| ', '\n', phyloseq_subset),
+                phyloseq_subset = gsub('\'3\'', '\'03\'', phyloseq_subset))
 physeq_S2D2_l_df %>% .$phyloseq_subset %>% unique
 
 ## ---- fig.height=6, fig.width=7.5----------------------------------------

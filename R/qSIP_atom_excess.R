@@ -77,6 +77,17 @@ qSIP_atom_excess_format = function(physeq, control_expr, treatment_rep){
                           include_sample_data=TRUE,
                           sample_col_keep=cols,
                           control_expr=control_expr)
+  # removing 'infinite' BD values
+  tmp = colnames(df_OTU)
+  df_OTU = df_OTU %>%
+    dplyr::mutate_(Buoyant_density = "HTSSIP::as.Num(Buoyant_density)",
+                   Count = "HTSSIP::as.Num(Count)") %>%
+    dplyr::filter_('! is.infinite(Buoyant_density)') %>%
+    dplyr::filter_('! is.na(Buoyant_density)') %>%
+    as.data.frame
+  colnames(df_OTU) = tmp
+
+  # return
   return(df_OTU)
 }
 
@@ -102,10 +113,12 @@ qSIP_atom_excess_format = function(physeq, control_expr, treatment_rep){
 #' # tranforming values
 #' physeq_rep3_t = OTU_qPCR_trans(physeq_rep3, physeq_rep3_qPCR)
 #'
+#' \dontrun{
 #' # BD shift (Z) & atom excess (A)
 #' atomX = qSIP_atom_excess(physeq_rep3_t,
 #'                         control_expr='Treatment=="12C-Con"',
 #'                         treatment_rep='Replicate')
+#' }
 #'
 qSIP_atom_excess = function(physeq,
                             control_expr,
@@ -128,10 +141,11 @@ qSIP_atom_excess = function(physeq,
     # BD shift (Z)
     df_OTU_W = df_OTU %>%
       # weighted mean buoyant density (W)
-      dplyr::group_by_('IS_CONTROL', 'OTU', treatment_rep) %>%
       dplyr::mutate_(Buoyant_density = "HTSSIP::as.Num(Buoyant_density)",
-                    Count = "HTSSIP::as.Num(Count)") %>%
-      dplyr::summarize_(W = "stats::weighted.mean(Buoyant_density, Count, na.rm=TRUE)")
+                     Count = "HTSSIP::as.Num(Count)") %>%
+      dplyr::group_by_('IS_CONTROL', 'OTU', treatment_rep) %>%
+      dplyr::summarize_(W = "stats::weighted.mean(Buoyant_density, Count, na.rm=TRUE)") %>%
+      dplyr::ungroup()
   }
 
 

@@ -7,7 +7,8 @@ data by calculating the beta diversity between unlabeled control
 and labeled treatment gradient fraction communities.}
 \usage{
 BD_shift(physeq, method = "unifrac", weighted = TRUE, fast = TRUE,
-  normalized = FALSE, parallel = FALSE)
+  normalized = FALSE, ex = "Substrate=='12C-Con'", nperm = 100, a = 0.2,
+  parallel_perm = FALSE, parallel_dist = FALSE)
 }
 \arguments{
 \item{physeq}{phyloseq object}
@@ -20,7 +21,15 @@ BD_shift(physeq, method = "unifrac", weighted = TRUE, fast = TRUE,
 
 \item{normalized}{Normalized abundances}
 
-\item{parallel}{Calculate in parallel}
+\item{ex}{Expression for selecting controls based on metadata}
+
+\item{nperm}{Number of bootstrap permutations}
+
+\item{a}{The alpha for calculating confidence intervals}
+
+\item{parallel_perm}{Calculate bootstrap permutations in parallel}
+
+\item{parallel_dist}{Calculate beta-diveristy distances in parallel}
 }
 \value{
 a data.frame object of weighted mean distances
@@ -45,6 +54,10 @@ to standardize the values relative to the unlabeled control
 mean beta diversity of overlapping labeled treatment gradients is
 calculated for each unlabeled control, and the percent overlap of
 each labeled treatment fraction is used to weight the mean.
+
+A permutation test is used to determine 'BD shift windows'. The permutation
+test consists of permuting OTU abundances in the treatments and calculating
+beta-diversity. A boostrap confidence interval is calculated from the replicates.
 }
 \examples{
 data(physeq_S2D2)
@@ -56,13 +69,13 @@ ex = "(Substrate=='12C-Con' & Day=='${Day}') | (Substrate=='${Substrate}' & Day 
 physeq_S2D2_l = phyloseq_subset(physeq_S2D2, params, ex)
 
 # Calculating BD_shift on 1 subset (use lapply function to process full list)
-wmean1 = BD_shift(physeq_S2D2_l[[1]])
+wmean1 = BD_shift(physeq_S2D2_l[[1]], nperm=5)
 
 ggplot(wmean1, aes(BD_min.x, wmean_dist)) +
    geom_point()
 
-# Calculating BD_shift on all subsets
-lapply(physeq_S2D2_l, BD_shift)
+# Calculating BD_shift on all subsets; using just 5 permutations to speed up analysis
+lapply(physeq_S2D2_l, BD_shift, nperm=5)
 }
 
 }
