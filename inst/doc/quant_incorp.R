@@ -66,7 +66,8 @@ ggplot(df_j, aes(OTU)) +
 ## formatting the table
 df_j_g = df_j %>%
   dplyr::select(OTU, Z, delta_BD) %>%
-  tidyr::gather(Method, BD_shift, Z, delta_BD)
+  tidyr::gather(Method, BD_shift, Z, delta_BD) %>%
+  mutate(Method = ifelse(Method == 'Z', 'q-SIP', 'delta-BD'))
 
 ## plotting 
 ggplot(df_j_g, aes(Method, BD_shift)) +

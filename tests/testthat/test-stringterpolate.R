@@ -1,7 +1,7 @@
 test_that('stringterpolate working with basic objects',{
-  user_name <- "smbache"
-  amount <- 6.656
-  account <- 1337
+  user_name = "smbache"
+  amount = 6.656
+  account = 1337
 
   x = stringterpolate("User ${user_name} (account $[08d]{account}) has $$[.2f]{amount}.")
   expect_equal(x, "User smbache (account 00001337) has $6.66.")

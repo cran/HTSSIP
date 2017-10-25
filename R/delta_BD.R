@@ -4,8 +4,8 @@ lin_interp = function(df, BD_min, BD_max, n=20){
   stopifnot(!is.null(df$Count))
 
   # linear interpolation function
-  BDs = df$Buoyant_density %>% as.Num
-  lin_fun = stats::approxfun(x=BDs, y=as.Num(df$Count))
+  BDs = as.numeric(as.character(df$Buoyant_density))
+  lin_fun = stats::approxfun(x=BDs, y=as.numeric(as.character(df$Count)))
 
   # BDs (x) for interplation of abundances (y)
   BD_x = seq(BD_min, BD_max, length.out=n)
@@ -83,12 +83,13 @@ delta_BD = function(physeq, control_expr, n=20, BD_min=NULL, BD_max=NULL){
   # total sum scaling
   df_OTU = df_OTU %>%
     dplyr::group_by_("SAMPLE_JOIN") %>%
-    dplyr::mutate_(Count = "Count / sum(as.numeric(Count))",
+    dplyr::mutate_(Count = "as.numeric(as.character(Count))",
+                   Count = "Count / sum(Count)",
                    Count = "ifelse(is.na(Count), 0, Count)") %>%
     dplyr::ungroup()
 
   # BD min/max
-  df_OTU$Buoyant_density = df_OTU$Buoyant_density %>% as.Num
+  df_OTU$Buoyant_density = as.numeric(as.character(df_OTU$Buoyant_density))
   if(is.null(BD_min)){
     BD_min = df_OTU$Buoyant_density %>% min
   }
@@ -104,7 +105,6 @@ delta_BD = function(physeq, control_expr, n=20, BD_min=NULL, BD_max=NULL){
   ## calculation
   df_OTU = df_OTU %>%
     # linear interpolation for each OTU in each gradient
-    #head() %>% print %>%
     dplyr::group_by_("IS_CONTROL", "OTU") %>%
     tidyr::nest_(key_col='data',
                  nest_cols=nest_cols) %>%

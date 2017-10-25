@@ -91,7 +91,7 @@ physeq_rep3_qPCR$raw %>% head
 physeq_rep3_qPCR$summary %>% head
 
 ## ---- fig.height=3, fig.width=7------------------------------------------
-x_lab = 'Buoyant density (g ml^-1)'
+x_lab = bquote('Buoyant density (g '* ml^-1*')')
 y_lab = '16S rRNA gene copies'
 
 ggplot(physeq_rep3_qPCR$summary, aes(Buoyant_density, qPCR_tech_rep_mean,

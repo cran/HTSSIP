@@ -1,3 +1,5 @@
+# test_file('~/dev/HTSSIP/tests/testthat/test-delta_BD.R')
+
 test_that('linear interpolation of abundances from BD values',{
   df = data.frame(
     Buoyant_density = seq(1.68, 1.76, 0.01),
@@ -23,7 +25,9 @@ test_that('linear interpolation of abundances from BD values',{
 
 
 test_that('delta BD on rep3 dataset',{
+  skip_on_cran()
   data(physeq_rep3)
+
   dBD = delta_BD(physeq_rep3,
                  control_expr='Treatment=="12C-Con"')
   expect_is(dBD, 'data.frame')
@@ -32,7 +36,6 @@ test_that('delta BD on rep3 dataset',{
 
 test_that('delta BD on S2D2 list: each in parallel',{
   skip_on_cran()
-
   data(physeq_S2D2_l)
 
   doParallel::registerDoParallel(2)

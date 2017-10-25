@@ -1,8 +1,10 @@
+# test_file('~/dev/HTSSIP/tests/testthat/test-qSIP_atom_excess.R')
+
 test_that('qSIP_BD_shift working', {
   skip_on_cran()
-
   data(physeq_rep3)
   data(physeq_rep3_qPCR)
+
   physeq_rep3_t = OTU_qPCR_trans(physeq_rep3, physeq_rep3_qPCR)
 
   # BD shift (Z) & atom excess (A)
@@ -26,8 +28,10 @@ test_that('qSIP_BD_shift working', {
 })
 
 test_that('bootstrap iteration is working', {
+  skip_on_cran()
   data(physeq_rep3)
   data(physeq_rep3_qPCR)
+
   physeq_rep3_t = OTU_qPCR_trans(physeq_rep3, physeq_rep3_qPCR)
 
   # BD shift (Z) & atom excess (A)
@@ -45,9 +49,9 @@ test_that('bootstrap iteration is working', {
 
 test_that('bootstrap in parallel working', {
   skip_on_cran()
-
   data(physeq_rep3)
   data(physeq_rep3_qPCR)
+
   physeq_rep3_t = OTU_qPCR_trans(physeq_rep3, physeq_rep3_qPCR)
 
   # BD shift (Z) & atom excess (A)
