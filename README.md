@@ -1,7 +1,7 @@
 HTSSIP
 ======
 
-[![Travis-CI Build Status](https://travis-ci.org/nick-youngblut/HTSSIP.svg?branch=master)](https://travis-ci.org/nick-youngblut/HTSSIP)
+[![Travis-CI Build Status](https://travis-ci.org/buckleylab/HTSSIP.svg?branch=master)](https://travis-ci.org/buckleylab/HTSSIP)
 
 HTSSIP is an R package for analyzing high throughput sequence data
 from nucleotide stable isotope probing (DNA- & RNA-SIP) experiments. 
@@ -27,7 +27,7 @@ A good place to start is the **HTSSIP introduction** vignette.
 
 The manuscript describing HTSSIP is:
 
-> Youngblut, Nicholas D., Samuel E. Barnett, and Daniel H. Buckley. 2017. “HTSSIP: An R Package for Analysis of High Throughput Sequencing Data from Nucleic Acid Stable Isotope Probing (SIP) Experiments.” bioRxiv. doi:10.1101/166009.
+> Youngblut ND, Barnett SE, Buckley DH (2018) HTSSIP: An R package for analysis of high throughput sequencing data from nucleic acid stable isotope probing (SIP) experiments. PLoS ONE 13(1): e0189616. https://doi.org/10.1371/journal.pone.0189616
 
 
 ## References 

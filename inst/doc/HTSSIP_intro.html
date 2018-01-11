@@ -1,352 +1,204 @@
 <!DOCTYPE html>
-<html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>HTS-SIP introduction</title>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
 
-<script type="text/javascript">
-window.onload = function() {
-  var imgs = document.getElementsByTagName('img'), i, img;
-  for (i = 0; i < imgs.length; i++) {
-    img = imgs[i];
-    // center an image if it is the only element of its parent
-    if (img.parentElement.childElementCount === 1)
-      img.parentElement.style.textAlign = 'center';
-  }
-};
-</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Styles for R syntax highlighter -->
+<meta name="author" content="Nick Youngblut" />
+
+<meta name="date" content="2018-01-10" />
+
+<title>HTSSIP introduction</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-   pre .operator,
-   pre .paren {
-     color: rgb(104, 118, 135)
-   }
-
-   pre .literal {
-     color: #990073
-   }
-
-   pre .number {
-     color: #099;
-   }
-
-   pre .comment {
-     color: #998;
-     font-style: italic
-   }
-
-   pre .keyword {
-     color: #900;
-     font-weight: bold
-   }
-
-   pre .identifier {
-     color: rgb(0, 0, 0);
-   }
-
-   pre .string {
-     color: #d14;
-   }
-</style>
-
-<!-- R syntax highlighter -->
-<script type="text/javascript">
-var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
-hljs.initHighlightingOnLoad();
-</script>
-
-
-
-<style type="text/css">
-body, td {
-   font-family: sans-serif;
-   background-color: white;
-   font-size: 13px;
-}
-
-body {
-  max-width: 800px;
-  margin: auto;
-  padding: 1em;
-  line-height: 20px;
-}
-
-tt, code, pre {
-   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
-}
-
-h1 {
-   font-size:2.2em;
-}
-
-h2 {
-   font-size:1.8em;
-}
-
-h3 {
-   font-size:1.4em;
-}
-
-h4 {
-   font-size:1.0em;
-}
-
-h5 {
-   font-size:0.9em;
-}
-
-h6 {
-   font-size:0.8em;
-}
-
-a:visited {
-   color: rgb(50%, 0%, 50%);
-}
-
-pre, img {
-  max-width: 100%;
-}
-pre {
-  overflow-x: auto;
-}
-pre code {
-   display: block; padding: 0.5em;
-}
-
-code {
-  font-size: 92%;
-  border: 1px solid #ccc;
-}
-
-code[class] {
-  background-color: #F8F8F8;
-}
-
-table, td, th {
-  border: none;
-}
-
-blockquote {
-   color:#666666;
-   margin:0;
-   padding-left: 1em;
-   border-left: 0.5em #EEE solid;
-}
-
-hr {
-   height: 0px;
-   border-bottom: none;
-   border-top-width: thin;
-   border-top-style: dotted;
-   border-top-color: #999999;
-}
-
-@media print {
-   * {
-      background: transparent !important;
-      color: black !important;
-      filter:none !important;
-      -ms-filter: none !important;
-   }
-
-   body {
-      font-size:12pt;
-      max-width:100%;
-   }
-
-   a, a:visited {
-      text-decoration: underline;
-   }
-
-   hr {
-      visibility: hidden;
-      page-break-before: always;
-   }
-
-   pre, blockquote {
-      padding-right: 1em;
-      page-break-inside: avoid;
-   }
-
-   tr, img {
-      page-break-inside: avoid;
-   }
-
-   img {
-      max-width: 100% !important;
-   }
-
-   @page :left {
-      margin: 15mm 20mm 15mm 10mm;
-   }
-
-   @page :right {
-      margin: 15mm 10mm 15mm 20mm;
-   }
-
-   p, h2, h3 {
-      orphans: 3; widows: 3;
-   }
-
-   h2, h3 {
-      page-break-after: avoid;
-   }
-}
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
 
 </head>
 
 <body>
-<hr/>
 
-<p><strong>HTSSIP</strong> is a package for analyzing high throughput sequence (HTS) data from DNA- or RNA-based stable isotope probing (SIP) experiments. </p>
 
+
+
+<h1 class="title toc-ignore">HTSSIP introduction</h1>
+<h4 class="author"><em>Nick Youngblut</em></h4>
+<h4 class="date"><em>2018-01-10</em></h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#hts-sip-introduction">HTS-SIP introduction</a><ul>
+<li><a href="#background">Background</a><ul>
+<li><a href="#stable-isotope-probing">Stable Isotope Probing</a></li>
+<li><a href="#hts-sip">HTS-SIP</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#htssip-package-data">HTSSIP package data</a><ul>
+<li><a href="#experiment-overview">Experiment overview</a></li>
+<li><a href="#sample-metadata">Sample metadata</a></li>
+<li><a href="#parsing-the-dataset">Parsing the dataset</a></li>
+</ul></li>
+<li><a href="#references-for-methods-in-htssip">References for methods in HTSSIP</a></li>
+<li><a href="#session-info">Session info</a></li>
+</ul>
+</div>
+
+<hr />
+<p><strong>HTSSIP</strong> is a package for analyzing high throughput sequence (HTS) data from DNA- or RNA-based stable isotope probing (SIP) experiments.</p>
 <p>I recommend starting with this introductory vignette, then checking out the other vignettes:</p>
-
 <ul>
 <li><strong>Dataset exploration</strong>
-
 <ul>
 <li><a href="beta_diversity_ordinations.html">Beta diversity ordinations of gradient fraction communities</a></li>
 <li><a href="BD_shifts.html">Whole-community BD shift plots</a></li>
 </ul></li>
 <li><strong>Dataset simulation</strong>
-
 <ul>
 <li><a href="HTSSIP_sim.html">HTS-SIP dataset simulation</a></li>
 </ul></li>
 <li><strong>Detecting incorporators</strong>
-
 <ul>
 <li><a href="MW_HR_SIP.html">HR-SIP &amp; MW-HR-SIP</a></li>
 <li><a href="qSIP.html">q-SIP</a></li>
 </ul></li>
 <li><strong>Quantifying the amount of isotope incorporated</strong>
-
 <ul>
 <li><a href="quant_incorp.html">quantifying incorporation</a></li>
 </ul></li>
 </ul>
-
+<div id="hts-sip-introduction" class="section level1">
 <h1>HTS-SIP introduction</h1>
-
-<p>The goal of HTS-SIP methods is to accurately determine which taxa (e.g., bacterial 16S rRNA OTUs) have incorporated isotopically labed substrate into biomass. By correctly identifying these &#39;incorporators&#39;, a number of fundamental questions about microbial ecology can be investigated, such as:</p>
-
+<p>The goal of HTS-SIP methods is to accurately determine which taxa (e.g., bacterial 16S rRNA OTUs) have incorporated isotopically labed substrate into biomass. By correctly identifying these ‘incorporators’, a number of fundamental questions about microbial ecology can be investigated, such as:</p>
 <ul>
 <li><strong>the microbial food web</strong>
-
 <ul>
 <li>e.g., Which bacteria contribute to each step of biomass breakdown in soil?</li>
 </ul></li>
 <li><strong>taxonomic conservatism of ecological roles</strong>
-
 <ul>
 <li>e.g., Is taxonomic relatedness a good predictor of functional similarity (similar niche)?</li>
 <li>e.g., Do OTU groupings accurately delimit functionally coherent individuals?</li>
 </ul></li>
-<li>*<em>competition and mutualism *</em>
-
+<li><strong>competition and mutualism </strong>
 <ul>
 <li>e.g., Which microbes will (or will not) stabily coexist in a particular environment?</li>
 </ul></li>
 <li><strong>how microbial physiology can dictate biogeographic patterns</strong>
-
 <ul>
-<li>e.g., Is the biogeography distribution of cellulose specialists more patchy than carbon source generalists? </li>
+<li>e.g., Is the biogeography distribution of cellulose specialists more patchy than carbon source generalists?</li>
 </ul></li>
 <li><strong>the prevalence of functional redundancy and community stability (resilience and resistance)</strong>
-
 <ul>
 <li>e.g., Do many microbes consume the same substrates? How can this affect stability of the microbial community and the ecosystem processes mediated by members of the community?</li>
 </ul></li>
 </ul>
-
+<div id="background" class="section level2">
 <h2>Background</h2>
-
-<p>Note: I&#39;m going to just refer to DNA-SIP, but most of this also applies to RNA-SIP.</p>
-
+<p>Note: I’m going to just refer to DNA-SIP, but most of this also applies to RNA-SIP.</p>
+<div id="stable-isotope-probing" class="section level3">
 <h3>Stable Isotope Probing</h3>
-
-<p>In theory, if a taxon incorporates isotopically labeled substrate, then its DNA with be &#39;heavier&#39; than if that same taxon had instead incorporated unlabeled substrate. By &#39;heavier&#39;, I mean that the DNA with have a higher buoyant density (BD) in a CsCl gradient. So, if you were to load isotopically labeled DNA into one CsCl gradient and unlabeled DNA (from the same taxon) in another CsCl gradient, then the labeled DNA with appear shifted to a heavier BD than the unlabeled DNA. The DNA should be more or less normally distributed in each gradient, so picture a Gaussian distribution that shifts from a &#39;light&#39; BD to a &#39;heavy&#39; BD between the control and treatment gradients. This is the basics of stable isotope probing, which is a powerful method because it can be used to detect which taxa <em>in an entire community</em> consumed particular substrates (e.g., cellulose). </p>
-
-<p>If &#39;heavy&#39; DNA is shifted from &#39;light&#39; DNA, why are both a control and treatment gradient needed instead of just carefully separating out the &#39;heavy&#39; DNA band from the &#39;light&#39; DNA band in just one gradient? While this technique used be done in older SIP studies, the main problem is the BD of DNA is also a factor of G+C content (&amp; some other factors). DNA with a higher G+C content has a &#39;heavier&#39; BD. So, labeled, low G+C DNA can easily overlap with unlabeled high G+C DNA. </p>
-
-<p>Let&#39;s consider a simple DNA-SIP experiment. A basic SIP experiment could consist of incubating aliquots of soil with either 13C-glucose (treatment) or 12C-glucose (the corresponding control). The DNA is then extracted from each soil sample, and heavy DNA is separated (at least partially) from light DNA using CsCl gradient ultra centrifugation. Now, the challenge is to accurately determine the location of each taxon&#39;s DNA in each of the 2 gradients in order to identify which taxa &#39;shifted&#39; in the labeled treatment gradient due to isotope incorporation. Prior to the rise of high throughput sequencing (HTS) methods, this task was very difficult due to the limited throughput and taxonomic resolution of molecular fingerprinting and Sanger sequencing. </p>
-
+<p>In theory, if a taxon incorporates isotopically labeled substrate, then its DNA with be ‘heavier’ than if that same taxon had instead incorporated unlabeled substrate. By ‘heavier’, I mean that the DNA with have a higher buoyant density (BD) in a CsCl gradient. So, if you were to load isotopically labeled DNA into one CsCl gradient and unlabeled DNA (from the same taxon) in another CsCl gradient, then the labeled DNA with appear shifted to a heavier BD than the unlabeled DNA. The DNA should be more or less normally distributed in each gradient, so picture a Gaussian distribution that shifts from a ‘light’ BD to a ‘heavy’ BD between the control and treatment gradients. This is the basics of stable isotope probing, which is a powerful method because it can be used to detect which taxa <em>in an entire community</em> consumed particular substrates (e.g., cellulose).</p>
+<p>If ‘heavy’ DNA is shifted from ‘light’ DNA, why are both a control and treatment gradient needed instead of just carefully separating out the ‘heavy’ DNA band from the ‘light’ DNA band in just one gradient? While this technique used be done in older SIP studies, the main problem is the BD of DNA is also a factor of G+C content (&amp; some other factors). DNA with a higher G+C content has a ‘heavier’ BD. So, labeled, low G+C DNA can easily overlap with unlabeled high G+C DNA.</p>
+<p>Let’s consider a simple DNA-SIP experiment. A basic SIP experiment could consist of incubating aliquots of soil with either 13C-glucose (treatment) or 12C-glucose (the corresponding control). The DNA is then extracted from each soil sample, and heavy DNA is separated (at least partially) from light DNA using CsCl gradient ultra centrifugation. Now, the challenge is to accurately determine the location of each taxon’s DNA in each of the 2 gradients in order to identify which taxa ‘shifted’ in the labeled treatment gradient due to isotope incorporation. Prior to the rise of high throughput sequencing (HTS) methods, this task was very difficult due to the limited throughput and taxonomic resolution of molecular fingerprinting and Sanger sequencing.</p>
+</div>
+<div id="hts-sip" class="section level3">
 <h3>HTS-SIP</h3>
-
-<p>With high throughput sequencing, the taxonomic composition can be assessed at many points along a CsCl gradient by fractionating the gradient and sequencing the DNA in each fraction (note: I&#39;m just going to focus on 16S rRNA sequencing, but fungal-ITS or metagenomic sequencing are also effective HTS-SIP methods). A large number of gradient fractions can be sequenced, which can help pinpoint the exact BD density range that each OTU occupies. For a typical HR-SIP experiment, ~20-30 fractions from each gradient are often sequenced. </p>
-
-<p>Now remember, we are trying to use HTS-SIP to identify &#39;BD shifts&#39;, which indicate isotope incorporation. This is done by comparing labeled-treatment gradients to their corresponding unlabeled control gradients. Optimally, we&#39;d be able to measure the <em>absolute</em> abundance of each taxon&#39;s OTU in each gradient fraction in order to get an idea where the Gaussian distribution of that OTU&#39;s DNA is in the gradient. </p>
-
-<p>The major challenge of analyzing HTS data is that the data is compositional, in that the total number of sequences in a sample does not provide any information on the total numbers of each taxon in the sample. This is why relative abundances of OTUs are shown in most microbiome papers. Therefore, we have to try to determine the absolute abundance Gaussian distributions of each OTU in each gradient based on compositional 16S rRNA sequence data. Various HTS-SIP data analysis methods have be developed to address this challenge (e.g., HR-SIP and q-SIP). This R package was developed to easily implement on your own data, so that you can compare the results (and possible develop new methods). 
-For more information on SIP and HTS-SIP, check out these references:</p>
-
+<p>With high throughput sequencing, the taxonomic composition can be assessed at many points along a CsCl gradient by fractionating the gradient and sequencing the DNA in each fraction (note: I’m just going to focus on 16S rRNA sequencing, but fungal-ITS or metagenomic sequencing are also effective HTS-SIP methods). A large number of gradient fractions can be sequenced, which can help pinpoint the exact BD density range that each OTU occupies. For a typical HR-SIP experiment, ~20-30 fractions from each gradient are often sequenced.</p>
+<p>Now remember, we are trying to use HTS-SIP to identify ‘BD shifts’, which indicate isotope incorporation. This is done by comparing labeled-treatment gradients to their corresponding unlabeled control gradients. Optimally, we’d be able to measure the <em>absolute</em> abundance of each taxon’s OTU in each gradient fraction in order to get an idea where the Gaussian distribution of that OTU’s DNA is in the gradient.</p>
+<p>The major challenge of analyzing HTS data is that the data is compositional, in that the total number of sequences in a sample does not provide any information on the total numbers of each taxon in the sample. This is why relative abundances of OTUs are shown in most microbiome papers. Therefore, we have to try to determine the absolute abundance Gaussian distributions of each OTU in each gradient based on compositional 16S rRNA sequence data. Various HTS-SIP data analysis methods have be developed to address this challenge (e.g., HR-SIP and q-SIP). This R package was developed to easily implement on your own data, so that you can compare the results (and possible develop new methods). For more information on SIP and HTS-SIP, check out these references:</p>
 <ul>
 <li><strong>DNA SIP</strong>
-
 <ul>
 <li>Neufeld, Josh D., Jyotsna Vohra, Marc G. Dumont, Tillmann Lueders, Mike Manefield, Michael W. Friedrich, and J. Colin Murrell. 2007. “DNA Stable-Isotope Probing.” Nature Protocols 2 (4): 860–66.</li>
 <li>Buckley, Daniel H., Varisa Huangyutitham, Shi-Fang Hsu, and Tyrrell A. Nelson. 2007. “Stable Isotope Probing with 15N Achieved by Disentangling the Effects of Genome G+C Content and Isotope Enrichment on DNA Density.” Applied and Environmental Microbiology 73 (10): 3189–95.</li>
 <li>Youngblut, Nicholas D., and Daniel H. Buckley. 2014. “Intra-Genomic Variation in G + C Content and Its Implications for DNA Stable Isotope Probing.” Environmental Microbiology Reports 6 (6): 767–75.</li>
 </ul></li>
 <li><strong>HR-SIP</strong>
-
 <ul>
 <li>Pepe-Ranney, Charles, Chantal Koechli, Ruth Potrafka, Cheryl Andam, Erin Eggleston, Ferran Garcia-Pichel, and Daniel H. Buckley. 2015. “Non-Cyanobacterial Diazotrophs Mediate Dinitrogen Fixation in Biological Soil Crusts during Early Crust Formation.” The ISME Journal.</li>
 <li>Pepe-Ranney, Charles, Ashley N. Campbell, Chantal N. Koechli, Sean Berthrong, and Daniel H. Buckley. 2016. “Unearthing the Ecology of Soil Microorganisms Using a High Resolution DNA-SIP Approach to Explore Cellulose and Xylose Metabolism in Soil.” Terrestrial Microbiology, 703.</li>
 </ul></li>
 <li><strong>MW-HR-SIP</strong>
-
 <ul>
-<li>Youngblut, Nicholas D., and Daniel H. Buckley. &ldquo;Evaluating the Accuracy of DNA Stable Isotope Probing&rdquo;. in prep</li>
+<li>Youngblut, Nicholas D., and Daniel H. Buckley. “Evaluating the Accuracy of DNA Stable Isotope Probing”. in prep</li>
 </ul></li>
 <li><strong>qSIP</strong>
-
 <ul>
 <li>Hungate, Bruce A., Rebecca L. Mau, Egbert Schwartz, J. Gregory Caporaso, Paul Dijkstra, Natasja van Gestel, Benjamin J. Koch, et al. 2015. “Quantitative Microbial Ecology Through Stable Isotope Probing.” Applied and Environmental Microbiology, August, AEM.02280–15.</li>
 </ul></li>
 </ul>
-
+</div>
+</div>
+</div>
+<div id="htssip-package-data" class="section level1">
 <h1>HTSSIP package data</h1>
-
-<p>The <code>phyloseq</code> R package provides some great functions for importing and analyzing microbiome data in R. So instead of reinventing the wheel, HTSSIP utilizes Phyloseq objects as input. See the <a href="https://github.com/joey711/phyloseq">GitHub page</a> or the 
-<a href="http://joey711.github.io/phyloseq/">package website</a> for more info about the phyloseq. </p>
-
-<p>The basic HTS-SIP dataset in the <code>HTSSIP</code> package consists of three CsCl 3 gradients, each with ~24 samples (gradient fractions). There are 2 treatment gradients, which contained DNA extracted from microcosms recieving both cellulose and glucose, but only one substrate was 13C-labeled for each treatment. For example, the 13C-cellulose (13C-Cel) treatment recieved 13C-cellulose and 12C-glucose. This experimental design had the benefit of requiring only one 12C-control that recieved 12C-cellulose and 12C-glucose. </p>
-
-<p>First, let&#39;s load some packages including <code>HTSSIP</code>. </p>
-
-<pre><code class="r">library(dplyr)
-library(HTSSIP)
-library(phyloseq)
-</code></pre>
-
-<p>Now, let&#39;s check out the HTSSIP phyloseq object that we will be using in the other vignettes. </p>
-
-<pre><code class="r">physeq_S2D2
-</code></pre>
-
+<p>The <code>phyloseq</code> R package provides some great functions for importing and analyzing microbiome data in R. So instead of reinventing the wheel, HTSSIP utilizes Phyloseq objects as input. See the <a href="https://github.com/joey711/phyloseq">GitHub page</a> or the <a href="http://joey711.github.io/phyloseq/">package website</a> for more info about the phyloseq.</p>
+<p>The basic HTS-SIP dataset in the <code>HTSSIP</code> package consists of three CsCl 3 gradients, each with ~24 samples (gradient fractions). There are 2 treatment gradients, which contained DNA extracted from microcosms recieving both cellulose and glucose, but only one substrate was 13C-labeled for each treatment. For example, the 13C-cellulose (13C-Cel) treatment recieved 13C-cellulose and 12C-glucose. This experimental design had the benefit of requiring only one 12C-control that recieved 12C-cellulose and 12C-glucose.</p>
+<p>First, let’s load some packages including <code>HTSSIP</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(HTSSIP)
+<span class="kw">library</span>(phyloseq)</code></pre></div>
+<p>Now, let’s check out the HTSSIP phyloseq object that we will be using in the other vignettes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">physeq_S2D2</code></pre></div>
 <pre><code>## phyloseq-class experiment-level object
 ## otu_table()   OTU Table:         [ 10001 taxa and 139 samples ]
 ## sample_data() Sample Data:       [ 139 samples by 17 sample variables ]
 ## tax_table()   Taxonomy Table:    [ 10001 taxa by 8 taxonomic ranks ]
-## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]
-</code></pre>
-
-<p>The &ldquo;S2D2&rdquo; part of the name stands for: 2 substrates assessed at 2 time points.</p>
-
+## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]</code></pre>
+<p>The “S2D2” part of the name stands for: 2 substrates assessed at 2 time points.</p>
+<div id="experiment-overview" class="section level3">
 <h3>Experiment overview</h3>
-
-<p>The dataset is from a larger SIP experiment in which labeled substrates were incubated with 15 g of soil in microcosms. The microcosms were destructively sampled at certain numbers of days from the initial substrate addition. The DNA was extracted and loaded into CsCl gradients. Importantly, each microcosm recieved the same amount of all substrates used in the experiment, but only one of the substrates was 13C labeled for each labeled treatment, while the unlabeled controls recieved all 12C unlabeled versions. This design allowed for only one 12C control microcosm per time point (instead of 1 control per labeled substrate). Approximately 24 gradient fractions from each gradient were sequenced with MiSeq 16S rRNA sequencing.  </p>
-
-<p>The dataset subset that we&#39;ll be using consists of samples 6 CsCl gradients: </p>
-
-<ol>
+<p>The dataset is from a larger SIP experiment in which labeled substrates were incubated with 15 g of soil in microcosms. The microcosms were destructively sampled at certain numbers of days from the initial substrate addition. The DNA was extracted and loaded into CsCl gradients. Importantly, each microcosm recieved the same amount of all substrates used in the experiment, but only one of the substrates was 13C labeled for each labeled treatment, while the unlabeled controls recieved all 12C unlabeled versions. This design allowed for only one 12C control microcosm per time point (instead of 1 control per labeled substrate). Approximately 24 gradient fractions from each gradient were sequenced with MiSeq 16S rRNA sequencing.</p>
+<p>The dataset subset that we’ll be using consists of samples 6 CsCl gradients:</p>
+<ol style="list-style-type: decimal">
 <li>12C-Con, Day 3</li>
 <li>13C-Glu, Day 3</li>
 <li>13C-Cel, Day 3</li>
@@ -354,25 +206,18 @@ library(phyloseq)
 <li>13C-Glu, Day 14</li>
 <li>13C-Cel, Day 14</li>
 </ol>
-
 <p>Notes:</p>
-
 <ul>
-<li>&ldquo;12C-Con&rdquo; stands for the unlabeled control </li>
-<li>&ldquo;13C-Glu&rdquo; and &ldquo;13C-Cel&rdquo; stand for 13C-glucose and 13C-cellulose, respectively</li>
-<li>&ldquo;Day&rdquo; is the number of days from substrate addition to harvest</li>
+<li>“12C-Con” stands for the unlabeled control</li>
+<li>“13C-Glu” and “13C-Cel” stand for 13C-glucose and 13C-cellulose, respectively</li>
+<li>“Day” is the number of days from substrate addition to harvest</li>
 </ul>
-
+</div>
+<div id="sample-metadata" class="section level3">
 <h3>Sample metadata</h3>
-
-<p>Here&#39;s a look at (some) of the sample metadata. Note that <code>Bouyant_density</code> is
-one of the columns. This is necessary for many of the analyses in <code>HTSSIP}</code></p>
-
-<pre><code class="r">physeq_S2D2 %&gt;% sample_data %&gt;% .[1:4,1:10]
-</code></pre>
-
-<pre><code>## Sample Data:        [4 samples by 10 sample variables]:
-##                              X.Sample primer_number fwd_barcode
+<p>Here’s a look at (some) of the sample metadata. Note that <code>Bouyant_density</code> is one of the columns. This is necessary for many of the analyses in <code>HTSSIP}</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">physeq_S2D2 %&gt;%<span class="st"> </span>sample_data %&gt;%<span class="st"> </span>.[<span class="dv">1</span>:<span class="dv">4</span>,<span class="dv">1</span>:<span class="dv">10</span>]</code></pre></div>
+<pre><code>##                              X.Sample primer_number fwd_barcode
 ## 12C-Con.D14.R1_F17 12C-Con.D14.R1_F17            38    CGTGAGTG
 ## 13C-Cel.D3.R1_F21   13C-Cel.D3.R1_F21             7    GGATATCT
 ## 13C-Cel.D3.R1_F20   13C-Cel.D3.R1_F20             6    CGTGAGTG
@@ -386,18 +231,12 @@ one of the columns. This is necessary for many of the analyses in <code>HTSSIP}<
 ## 12C-Con.D14.R1_F17        1.715475     unknown
 ## 13C-Cel.D3.R1_F21         1.705640     unknown
 ## 13C-Cel.D3.R1_F20         1.706186     unknown
-## 13C-Cel.D14.R1_F12        1.735145     unknown
-</code></pre>
-
+## 13C-Cel.D14.R1_F12        1.735145     unknown</code></pre>
 <p>To check the formatting of the phyloseq object:</p>
-
-<pre><code class="r"># Our phyloseq object should be formatted correctly (no errors)
-physeq_S2D2 = physeq_format(physeq_S2D2)
-physeq_S2D2 %&gt;% sample_data %&gt;% .[1:4,1:10]
-</code></pre>
-
-<pre><code>## Sample Data:        [4 samples by 10 sample variables]:
-##                              X.Sample primer_number fwd_barcode
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Our phyloseq object should be formatted correctly (no errors)</span>
+physeq_S2D2 =<span class="st"> </span><span class="kw">physeq_format</span>(physeq_S2D2)
+physeq_S2D2 %&gt;%<span class="st"> </span>sample_data %&gt;%<span class="st"> </span>.[<span class="dv">1</span>:<span class="dv">4</span>,<span class="dv">1</span>:<span class="dv">10</span>]</code></pre></div>
+<pre><code>##                              X.Sample primer_number fwd_barcode
 ## 12C-Con.D14.R1_F17 12C-Con.D14.R1_F17            38    CGTGAGTG
 ## 13C-Cel.D3.R1_F21   13C-Cel.D3.R1_F21             7    GGATATCT
 ## 13C-Cel.D3.R1_F20   13C-Cel.D3.R1_F20             6    CGTGAGTG
@@ -411,16 +250,11 @@ physeq_S2D2 %&gt;% sample_data %&gt;% .[1:4,1:10]
 ## 12C-Con.D14.R1_F17        1.715475     unknown
 ## 13C-Cel.D3.R1_F21         1.705640     unknown
 ## 13C-Cel.D3.R1_F20         1.706186     unknown
-## 13C-Cel.D14.R1_F12        1.735145     unknown
-</code></pre>
-
-<pre><code class="r"># This phyloseq object should NOT be formatted correctly 
-data(GlobalPatterns)
-GlobalPatterns %&gt;% sample_data %&gt;% .[1:4,1:ncol(.)]
-</code></pre>
-
-<pre><code>## Sample Data:        [4 samples by 7 sample variables]:
-##         X.SampleID  Primer Final_Barcode Barcode_truncated_plus_T
+## 13C-Cel.D14.R1_F12        1.735145     unknown</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This phyloseq object should NOT be formatted correctly </span>
+<span class="kw">data</span>(GlobalPatterns)
+GlobalPatterns %&gt;%<span class="st"> </span>sample_data %&gt;%<span class="st"> </span>.[<span class="dv">1</span>:<span class="dv">4</span>,<span class="dv">1</span>:<span class="kw">ncol</span>(.)]</code></pre></div>
+<pre><code>##         X.SampleID  Primer Final_Barcode Barcode_truncated_plus_T
 ## CL3            CL3 ILBC_01        AACGCA                   TGCGTT
 ## CC1            CC1 ILBC_02        AACTCG                   CGAGTT
 ## SV1            SV1 ILBC_03        AACTGT                   ACAGTT
@@ -434,147 +268,111 @@ GlobalPatterns %&gt;% sample_data %&gt;% .[1:4,1:ncol(.)]
 ## CL3       Calhoun South Carolina Pine soil, pH 4.9
 ## CC1       Cedar Creek Minnesota, grassland, pH 6.1
 ## SV1     Sevilleta new Mexico, desert scrub, pH 8.3
-## M31Fcsw    M3, Day 1, fecal swab, whole body study
-</code></pre>
-
-<pre><code class="r">tryCatch(
-  physeq_format(GlobalPatterns),
-  error = function(e) e
-  )
-</code></pre>
-
-<pre><code>## &lt;simpleError in physeq_format(GlobalPatterns): No &quot;Buoyant_density&quot; column found in metadata&gt;
-</code></pre>
-
+## M31Fcsw    M3, Day 1, fecal swab, whole body study</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tryCatch</span>(
+  <span class="kw">physeq_format</span>(GlobalPatterns),
+  <span class="dt">error =</span> function(e) e
+  )</code></pre></div>
+<pre><code>## &lt;simpleError in physeq_format(GlobalPatterns): No &quot;Buoyant_density&quot; column found in metadata&gt;</code></pre>
+</div>
+<div id="parsing-the-dataset" class="section level2">
 <h2>Parsing the dataset</h2>
-
-<p>For most of the analyses in <code>HTSSIP</code>, the gradient fraction samples of each labeled-treatment gradient is compared to its corresponding control. For example, the dataset that we&#39;ve been looking at has 4 comparisons: </p>
-
-<ol>
+<p>For most of the analyses in <code>HTSSIP</code>, the gradient fraction samples of each labeled-treatment gradient is compared to its corresponding control. For example, the dataset that we’ve been looking at has 4 comparisons:</p>
+<ol style="list-style-type: decimal">
 <li>12C-Con_Day3 vs 13C-Glu_Day3</li>
 <li>12C-Con_Day3 vs 13C-Cel_Day3</li>
 <li>12C-Con_Day14 vs 13C-Glu_Day14</li>
 <li>12C-Con_Day14 vs 13C-Cel_Day14</li>
 </ol>
-
 <blockquote>
 <p>Note that the same 12C-control is used for both treatments because both recieved glucose &amp; cellulose, but only 1 substrate was isotopically labeled in each.</p>
 </blockquote>
-
 <p>So to subset the data with the <code>phyloseq</code> package, we can use the <code>prune_samples()</code> function to subset the dataset:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m =<span class="st"> </span><span class="kw">sample_data</span>(physeq_S2D2)
 
-<pre><code class="r">m = sample_data(physeq_S2D2)
-
-physeq_13C.Glu_D3 = prune_samples((m$Substrate==&#39;12C-Con&#39; &amp; m$Day==3) | (m$Substrate==&#39;13C-Glu&#39; &amp; m$Day==3), physeq_S2D2)
-physeq_13C.Glu_D3
-</code></pre>
-
+physeq_13C.Glu_D3 =<span class="st"> </span><span class="kw">prune_samples</span>((m$Substrate==<span class="st">'12C-Con'</span> &amp;<span class="st"> </span>m$Day==<span class="dv">3</span>) |<span class="st"> </span>(m$Substrate==<span class="st">'13C-Glu'</span> &amp;<span class="st"> </span>m$Day==<span class="dv">3</span>), physeq_S2D2)
+physeq_13C.Glu_D3</code></pre></div>
 <pre><code>## phyloseq-class experiment-level object
 ## otu_table()   OTU Table:         [ 10001 taxa and 46 samples ]
 ## sample_data() Sample Data:       [ 46 samples by 17 sample variables ]
 ## tax_table()   Taxonomy Table:    [ 10001 taxa by 8 taxonomic ranks ]
-## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]
-</code></pre>
-
-<pre><code class="r">physeq_13C.Cel_D14 = prune_samples((m$Substrate==&#39;12C-Con&#39; &amp; m$Day==3) | (m$Substrate==&#39;13C-Cel&#39; &amp; m$Day==14), physeq_S2D2)
-physeq_13C.Cel_D14
-</code></pre>
-
+## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">physeq_13C.Cel_D14 =<span class="st"> </span><span class="kw">prune_samples</span>((m$Substrate==<span class="st">'12C-Con'</span> &amp;<span class="st"> </span>m$Day==<span class="dv">3</span>) |<span class="st"> </span>(m$Substrate==<span class="st">'13C-Cel'</span> &amp;<span class="st"> </span>m$Day==<span class="dv">14</span>), physeq_S2D2)
+physeq_13C.Cel_D14</code></pre></div>
 <pre><code>## phyloseq-class experiment-level object
 ## otu_table()   OTU Table:         [ 10001 taxa and 46 samples ]
 ## sample_data() Sample Data:       [ 46 samples by 17 sample variables ]
 ## tax_table()   Taxonomy Table:    [ 10001 taxa by 8 taxonomic ranks ]
-## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]
-</code></pre>
-
-<p>Writing a bunch of redundant code to make each subset is not a good method to subset the data if you have a bunch of subsets to make, so <code>HTSSIP</code> includes some functions to help. </p>
-
+## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]</code></pre>
+<p>Writing a bunch of redundant code to make each subset is not a good method to subset the data if you have a bunch of subsets to make, so <code>HTSSIP</code> includes some functions to help.</p>
 <p>The expression used in the <code>prune_samples()</code> to subset the data can be generalized as:</p>
-
-<pre><code class="r">ex = &quot;(Substrate==&#39;12C-Con&#39; &amp; Day==&#39;${Day}&#39;) | (Substrate==&#39;${Substrate}&#39; &amp; Day == &#39;${Day}&#39;)&quot;
-</code></pre>
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex =<span class="st"> &quot;(Substrate=='12C-Con' &amp; Day=='${Day}') | (Substrate=='${Substrate}' &amp; Day == '${Day}')&quot;</span></code></pre></div>
 <p>Now we need the parameters for each individual <code>prune_samples()</code> call. Then, we can iteratively insert these parameters into the expression in order create all of the subsets. This can be accomplished with:</p>
-
-<pre><code class="r">params = get_treatment_params(physeq_S2D2, c(&#39;Substrate&#39;, &#39;Day&#39;), &quot;Substrate != &#39;12C-Con&#39;&quot;)
-params
-</code></pre>
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">params =<span class="st"> </span><span class="kw">get_treatment_params</span>(physeq_S2D2, <span class="kw">c</span>(<span class="st">'Substrate'</span>, <span class="st">'Day'</span>), <span class="st">&quot;Substrate != '12C-Con'&quot;</span>)
+params</code></pre></div>
 <pre><code>##   Substrate Day
 ## 1   13C-Cel   3
 ## 2   13C-Cel  14
 ## 3   13C-Glu  14
-## 4   13C-Glu   3
-</code></pre>
-
-<p>Let&#39;s use the expression and parameters to subset the phyloseq object into a list of phyloseq object subsets: </p>
-
-<pre><code class="r">physeq_S2D2_l = phyloseq_subset(physeq_S2D2, params, ex)
-physeq_S2D2_l
-</code></pre>
-
-<pre><code>## $`(Substrate==&#39;12C-Con&#39; &amp; Day==&#39;3&#39;) | (Substrate==&#39;13C-Cel&#39; &amp; Day == &#39;3&#39;)`
+## 4   13C-Glu   3</code></pre>
+<p>Let’s use the expression and parameters to subset the phyloseq object into a list of phyloseq object subsets:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">physeq_S2D2_l =<span class="st"> </span><span class="kw">phyloseq_subset</span>(physeq_S2D2, params, ex)
+physeq_S2D2_l</code></pre></div>
+<pre><code>## $`(Substrate=='12C-Con' &amp; Day=='3') | (Substrate=='13C-Cel' &amp; Day == '3')`
 ## phyloseq-class experiment-level object
 ## otu_table()   OTU Table:         [ 10001 taxa and 46 samples ]
 ## sample_data() Sample Data:       [ 46 samples by 17 sample variables ]
 ## tax_table()   Taxonomy Table:    [ 10001 taxa by 8 taxonomic ranks ]
 ## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]
 ## 
-## $`(Substrate==&#39;12C-Con&#39; &amp; Day==&#39;14&#39;) | (Substrate==&#39;13C-Cel&#39; &amp; Day == &#39;14&#39;)`
+## $`(Substrate=='12C-Con' &amp; Day=='14') | (Substrate=='13C-Cel' &amp; Day == '14')`
 ## phyloseq-class experiment-level object
 ## otu_table()   OTU Table:         [ 10001 taxa and 46 samples ]
 ## sample_data() Sample Data:       [ 46 samples by 17 sample variables ]
 ## tax_table()   Taxonomy Table:    [ 10001 taxa by 8 taxonomic ranks ]
 ## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]
 ## 
-## $`(Substrate==&#39;12C-Con&#39; &amp; Day==&#39;14&#39;) | (Substrate==&#39;13C-Glu&#39; &amp; Day == &#39;14&#39;)`
+## $`(Substrate=='12C-Con' &amp; Day=='14') | (Substrate=='13C-Glu' &amp; Day == '14')`
 ## phyloseq-class experiment-level object
 ## otu_table()   OTU Table:         [ 10001 taxa and 47 samples ]
 ## sample_data() Sample Data:       [ 47 samples by 17 sample variables ]
 ## tax_table()   Taxonomy Table:    [ 10001 taxa by 8 taxonomic ranks ]
 ## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]
 ## 
-## $`(Substrate==&#39;12C-Con&#39; &amp; Day==&#39;3&#39;) | (Substrate==&#39;13C-Glu&#39; &amp; Day == &#39;3&#39;)`
+## $`(Substrate=='12C-Con' &amp; Day=='3') | (Substrate=='13C-Glu' &amp; Day == '3')`
 ## phyloseq-class experiment-level object
 ## otu_table()   OTU Table:         [ 10001 taxa and 46 samples ]
 ## sample_data() Sample Data:       [ 46 samples by 17 sample variables ]
 ## tax_table()   Taxonomy Table:    [ 10001 taxa by 8 taxonomic ranks ]
-## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]
-</code></pre>
-
-<p>With a list of phyloseq objects (1 list item per treatment-control comparison), we can use <code>lapply()</code> or a similar function to run analyses on each subset of the dataset. </p>
-
+## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]</code></pre>
+<p>With a list of phyloseq objects (1 list item per treatment-control comparison), we can use <code>lapply()</code> or a similar function to run analyses on each subset of the dataset.</p>
+</div>
+</div>
+<div id="references-for-methods-in-htssip" class="section level1">
 <h1>References for methods in HTSSIP</h1>
-
 <ul>
-<li><p><strong>HTS-SIP data exploration</strong></p>
-
+<li><strong>HTS-SIP data exploration</strong>
 <ul>
 <li>Multiple window High Resolution Stable Isotope Probing (MW-HR-SIP) as described in <a href="http://biorxiv.org/content/early/2017/05/17/138719">Youngblut and Buckley 2017</a></li>
 </ul></li>
-<li><p><strong>HR-SIP</strong></p>
-
+<li><strong>HR-SIP</strong>
 <ul>
 <li>High Resolution Stable Isotope Probing (HR-SIP) as described in <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4867679/">Pepe-Ranney et al., 2016</a></li>
 </ul></li>
-<li><p><strong>MW-HR-SIP</strong></p>
-
+<li><strong>MW-HR-SIP</strong>
 <ul>
 <li>Multiple window High Resolution Stable Isotope Probing (MW-HR-SIP) as described in <a href="http://biorxiv.org/content/early/2017/05/17/138719">Youngblut and Buckley 2017</a></li>
 </ul></li>
-<li><p><strong>q-SIP</strong></p>
-
+<li><strong>q-SIP</strong>
 <ul>
 <li>Quantitative stable isotope probing (q-SIP) as described in <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4592864/">Hungate et al., 2015</a></li>
 </ul></li>
 </ul>
-
+</div>
+<div id="session-info" class="section level1">
 <h1>Session info</h1>
-
-<pre><code class="r">sessionInfo()
-</code></pre>
-
-<pre><code>## R version 3.4.2 (2017-09-28)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.4.3 (2017-11-30)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 16.04.3 LTS
 ## 
@@ -594,32 +392,44 @@ physeq_S2D2_l
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] bindrcpp_0.2    phyloseq_1.20.0 HTSSIP_1.3.0    ggplot2_2.2.1  
+## [1] bindrcpp_0.2    phyloseq_1.20.0 HTSSIP_1.3.1    ggplot2_2.2.1  
 ## [5] tidyr_0.7.2     dplyr_0.7.4    
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] tidyselect_0.2.2    reshape2_1.4.2      purrr_0.2.4        
-##  [4] splines_3.4.2       lattice_0.20-35     rhdf5_2.20.0       
-##  [7] colorspace_1.3-2    stats4_3.4.2        mgcv_1.8-22        
-## [10] survival_2.41-3     rlang_0.1.2         glue_1.1.1         
-## [13] BiocGenerics_0.22.1 foreach_1.4.3       bindr_0.1          
-## [16] plyr_1.8.4          stringr_1.2.0       zlibbioc_1.22.0    
-## [19] Biostrings_2.44.2   munsell_0.4.3       gtable_0.2.0       
-## [22] codetools_0.2-15    evaluate_0.10.1     labeling_0.3       
-## [25] Biobase_2.36.2      knitr_1.17          permute_0.9-4      
-## [28] IRanges_2.10.5      biomformat_1.4.0    parallel_3.4.2     
-## [31] markdown_0.8        highr_0.6           Rcpp_0.12.13       
-## [34] scales_0.5.0        vegan_2.4-4         S4Vectors_0.14.7   
-## [37] jsonlite_1.5        XVector_0.16.0      mime_0.5           
-## [40] digest_0.6.12       stringi_1.1.5       grid_3.4.2         
-## [43] ade4_1.7-8          tools_3.4.2         magrittr_1.5       
-## [46] lazyeval_0.2.0      tibble_1.3.4        cluster_2.0.6      
-## [49] ape_4.1             pkgconfig_2.0.1     MASS_7.3-47        
-## [52] Matrix_1.2-11       data.table_1.10.4-2 assertthat_0.2.0   
-## [55] iterators_1.0.8     R6_2.2.2            multtest_2.32.0    
-## [58] igraph_1.1.2        nlme_3.1-131        compiler_3.4.2
-</code></pre>
+##  [4] splines_3.4.3       lattice_0.20-35     rhdf5_2.20.0       
+##  [7] colorspace_1.3-2    htmltools_0.3.6     stats4_3.4.3       
+## [10] mgcv_1.8-22         yaml_2.1.14         survival_2.41-3    
+## [13] rlang_0.1.2         glue_1.1.1          BiocGenerics_0.22.1
+## [16] foreach_1.4.3       bindr_0.1           plyr_1.8.4         
+## [19] stringr_1.2.0       zlibbioc_1.22.0     Biostrings_2.44.2  
+## [22] munsell_0.4.3       gtable_0.2.0        codetools_0.2-15   
+## [25] evaluate_0.10.1     labeling_0.3        Biobase_2.36.2     
+## [28] knitr_1.17          permute_0.9-4       IRanges_2.10.5     
+## [31] biomformat_1.4.0    parallel_3.4.3      Rcpp_0.12.13       
+## [34] scales_0.5.0        backports_1.1.1     vegan_2.4-4        
+## [37] S4Vectors_0.14.7    jsonlite_1.5        XVector_0.16.0     
+## [40] digest_0.6.12       stringi_1.1.5       grid_3.4.3         
+## [43] rprojroot_1.2       ade4_1.7-8          tools_3.4.3        
+## [46] magrittr_1.5        lazyeval_0.2.0      tibble_1.3.4       
+## [49] cluster_2.0.6       ape_4.1             pkgconfig_2.0.1    
+## [52] MASS_7.3-47         Matrix_1.2-11       data.table_1.10.4-2
+## [55] assertthat_0.2.0    rmarkdown_1.6       iterators_1.0.8    
+## [58] R6_2.2.2            multtest_2.32.0     igraph_1.1.2       
+## [61] nlme_3.1-131        compiler_3.4.3</code></pre>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 </body>
-
 </html>

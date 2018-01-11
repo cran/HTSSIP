@@ -1,271 +1,128 @@
 <!DOCTYPE html>
-<html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Introduction</title>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
 
-<script type="text/javascript">
-window.onload = function() {
-  var imgs = document.getElementsByTagName('img'), i, img;
-  for (i = 0; i < imgs.length; i++) {
-    img = imgs[i];
-    // center an image if it is the only element of its parent
-    if (img.parentElement.childElementCount === 1)
-      img.parentElement.style.textAlign = 'center';
-  }
-};
-</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Styles for R syntax highlighter -->
+<meta name="author" content="Nick Youngblut" />
+
+<meta name="date" content="2018-01-10" />
+
+<title>Quantifying isotope incorporation</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-   pre .operator,
-   pre .paren {
-     color: rgb(104, 118, 135)
-   }
-
-   pre .literal {
-     color: #990073
-   }
-
-   pre .number {
-     color: #099;
-   }
-
-   pre .comment {
-     color: #998;
-     font-style: italic
-   }
-
-   pre .keyword {
-     color: #900;
-     font-weight: bold
-   }
-
-   pre .identifier {
-     color: rgb(0, 0, 0);
-   }
-
-   pre .string {
-     color: #d14;
-   }
-</style>
-
-<!-- R syntax highlighter -->
-<script type="text/javascript">
-var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
-hljs.initHighlightingOnLoad();
-</script>
-
-<!-- MathJax scripts -->
-<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
-
-<style type="text/css">
-body, td {
-   font-family: sans-serif;
-   background-color: white;
-   font-size: 13px;
-}
-
-body {
-  max-width: 800px;
-  margin: auto;
-  padding: 1em;
-  line-height: 20px;
-}
-
-tt, code, pre {
-   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
-}
-
-h1 {
-   font-size:2.2em;
-}
-
-h2 {
-   font-size:1.8em;
-}
-
-h3 {
-   font-size:1.4em;
-}
-
-h4 {
-   font-size:1.0em;
-}
-
-h5 {
-   font-size:0.9em;
-}
-
-h6 {
-   font-size:0.8em;
-}
-
-a:visited {
-   color: rgb(50%, 0%, 50%);
-}
-
-pre, img {
-  max-width: 100%;
-}
-pre {
-  overflow-x: auto;
-}
-pre code {
-   display: block; padding: 0.5em;
-}
-
-code {
-  font-size: 92%;
-  border: 1px solid #ccc;
-}
-
-code[class] {
-  background-color: #F8F8F8;
-}
-
-table, td, th {
-  border: none;
-}
-
-blockquote {
-   color:#666666;
-   margin:0;
-   padding-left: 1em;
-   border-left: 0.5em #EEE solid;
-}
-
-hr {
-   height: 0px;
-   border-bottom: none;
-   border-top-width: thin;
-   border-top-style: dotted;
-   border-top-color: #999999;
-}
-
-@media print {
-   * {
-      background: transparent !important;
-      color: black !important;
-      filter:none !important;
-      -ms-filter: none !important;
-   }
-
-   body {
-      font-size:12pt;
-      max-width:100%;
-   }
-
-   a, a:visited {
-      text-decoration: underline;
-   }
-
-   hr {
-      visibility: hidden;
-      page-break-before: always;
-   }
-
-   pre, blockquote {
-      padding-right: 1em;
-      page-break-inside: avoid;
-   }
-
-   tr, img {
-      page-break-inside: avoid;
-   }
-
-   img {
-      max-width: 100% !important;
-   }
-
-   @page :left {
-      margin: 15mm 20mm 15mm 10mm;
-   }
-
-   @page :right {
-      margin: 15mm 10mm 15mm 20mm;
-   }
-
-   p, h2, h3 {
-      orphans: 3; widows: 3;
-   }
-
-   h2, h3 {
-      page-break-after: avoid;
-   }
-}
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
 
 </head>
 
 <body>
-<hr/>
 
+
+
+
+<h1 class="title toc-ignore">Quantifying isotope incorporation</h1>
+<h4 class="author"><em>Nick Youngblut</em></h4>
+<h4 class="date"><em>2018-01-10</em></h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#dataset">Dataset</a></li>
+<li><a href="#q-sip">q-SIP</a></li>
+<li><a href="#delta_bd">delta_BD</a></li>
+<li><a href="#comparing-results">Comparing results</a></li>
+<li><a href="#session-info">Session info</a></li>
+</ul>
+</div>
+
+<hr />
+<div id="introduction" class="section level1">
 <h1>Introduction</h1>
-
-<p>There are two prevaling methods for using HTS-SIP data to estimate the amount of isotope that each OTU incorporated: </p>
-
+<p>There are two prevaling methods for using HTS-SIP data to estimate the amount of isotope that each OTU incorporated:</p>
 <ul>
 <li>q-SIP</li>
 <li>delta_BD (a complementary analysis to HR-SIP)
-
 <ul>
-<li>Note: delta_BD is formally written as: \(\Delta\hat{BD}\) </li>
+<li>Note: delta_BD is formally written as: <span class="math inline">\(\Delta\hat{BD}\)</span></li>
 </ul></li>
 </ul>
-
 <p>In this vignette, we are going to show how to run both analyses and also compare the results a bit.</p>
-
+</div>
+<div id="dataset" class="section level1">
 <h1>Dataset</h1>
-
-<p>First, let&#39;s load some packages including <code>HTSSIP</code>. </p>
-
-<pre><code class="r">library(dplyr)
-library(ggplot2)
-library(HTSSIP)
-</code></pre>
-
-<p>OK. We&#39;re going to be using 2 data files: </p>
-
+<p>First, let’s load some packages including <code>HTSSIP</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(HTSSIP)</code></pre></div>
+<p>OK. We’re going to be using 2 data files:</p>
 <ul>
 <li>HTS-SIP data (phyloseq format)</li>
 <li>qPCR data (total 16S rRNA gene copies per gradient fraction)</li>
 </ul>
-
-<p>We&#39;ll be using the dataset that we simulated in the <a href="./HTSSIP_sim.html">HTSSIP_sim</a> vignette.</p>
-
+<p>We’ll be using the dataset that we simulated in the <a href="./HTSSIP_sim.html">HTSSIP_sim</a> vignette.</p>
 <p>The phyloseq object is similar to the dataset in the other vignettes.</p>
-
-<pre><code class="r"># HTS-SIP data
-physeq_rep3
-</code></pre>
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># HTS-SIP data</span>
+physeq_rep3</code></pre></div>
 <pre><code>## phyloseq-class experiment-level object
 ## otu_table()   OTU Table:         [ 6 taxa and 144 samples ]
-## sample_data() Sample Data:       [ 144 samples by 5 sample variables ]
-</code></pre>
-
-<p>The associated qPCR data is a list of length = 2. </p>
-
-<pre><code class="r"># qPCR data (list object)
-physeq_rep3_qPCR %&gt;% names
-</code></pre>
-
-<pre><code>## [1] &quot;raw&quot;     &quot;summary&quot;
-</code></pre>
-
-<p>For the analyses in this vignette, we only need the &#39;summary&#39; table.</p>
-
-<pre><code class="r"># qPCR data (list object)
-physeq_rep3_qPCR_sum = physeq_rep3_qPCR$summary
-physeq_rep3_qPCR_sum %&gt;% head(n=4)
-</code></pre>
-
+## sample_data() Sample Data:       [ 144 samples by 5 sample variables ]</code></pre>
+<p>The associated qPCR data is a list of length = 2.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># qPCR data (list object)</span>
+physeq_rep3_qPCR %&gt;%<span class="st"> </span>names</code></pre></div>
+<pre><code>## [1] &quot;raw&quot;     &quot;summary&quot;</code></pre>
+<p>For the analyses in this vignette, we only need the ‘summary’ table.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># qPCR data (list object)</span>
+physeq_rep3_qPCR_sum =<span class="st"> </span>physeq_rep3_qPCR$summary
+physeq_rep3_qPCR_sum %&gt;%<span class="st"> </span><span class="kw">head</span>(<span class="dt">n=</span><span class="dv">4</span>)</code></pre></div>
 <pre><code>##   IS_CONTROL                  Sample Buoyant_density qPCR_tech_rep_mean
 ## 1      FALSE 13C-Glu_rep1_1.671712_2        1.671712           46598172
 ## 2      FALSE 13C-Glu_rep1_1.671722_1        1.671722           42299449
@@ -275,31 +132,22 @@ physeq_rep3_qPCR_sum %&gt;% head(n=4)
 ## 1          9055833 13C-Glu_rep1        2   13C-Glu         1
 ## 2         16369298 13C-Glu_rep1        1   13C-Glu         1
 ## 3         18265667 13C-Glu_rep1        3   13C-Glu         1
-## 4          3796576 13C-Glu_rep1        4   13C-Glu         1
-</code></pre>
-
+## 4          3796576 13C-Glu_rep1        4   13C-Glu         1</code></pre>
+</div>
+<div id="q-sip" class="section level1">
 <h1>q-SIP</h1>
+<p>OK. Let’s quantify isotope incorporation witht the q-SIP method.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># transforming OTU counts</span>
+physeq_rep3_t =<span class="st"> </span><span class="kw">OTU_qPCR_trans</span>(physeq_rep3, physeq_rep3_qPCR_sum)
 
-<p>OK. Let&#39;s quantify isotope incorporation witht the q-SIP method. </p>
-
-<pre><code class="r"># transforming OTU counts
-physeq_rep3_t = OTU_qPCR_trans(physeq_rep3, physeq_rep3_qPCR_sum)
-
-# calculating atom fraction excess
-atomX = qSIP_atom_excess(physeq_rep3_t,
-                         control_expr=&#39;Treatment==&quot;12C-Con&quot;&#39;,
-                         treatment_rep=&#39;Replicate&#39;)
-atomX %&gt;% names
-</code></pre>
-
-<pre><code>## [1] &quot;W&quot; &quot;A&quot;
-</code></pre>
-
-<p>The resulting list object contains 2 data.frames. We are interested in the &#39;A&#39; table, which contains estimated BD shifts (Z) and atom fraction excess (A). </p>
-
-<pre><code class="r">atomX$A %&gt;% head(n=4)
-</code></pre>
-
+<span class="co"># calculating atom fraction excess</span>
+atomX =<span class="st"> </span><span class="kw">qSIP_atom_excess</span>(physeq_rep3_t,
+                         <span class="dt">control_expr=</span><span class="st">'Treatment==&quot;12C-Con&quot;'</span>,
+                         <span class="dt">treatment_rep=</span><span class="st">'Replicate'</span>)
+atomX %&gt;%<span class="st"> </span>names</code></pre></div>
+<pre><code>## [1] &quot;W&quot; &quot;A&quot;</code></pre>
+<p>The resulting list object contains 2 data.frames. We are interested in the ‘A’ table, which contains estimated BD shifts (Z) and atom fraction excess (A).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">atomX$A %&gt;%<span class="st"> </span><span class="kw">head</span>(<span class="dt">n=</span><span class="dv">4</span>)</code></pre></div>
 <pre><code>## # A tibble: 4 x 9
 ##     OTU     Wlab   Wlight          Z        Gi   Mlight Mheavymax     Mlab
 ##   &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
@@ -307,16 +155,11 @@ atomX %&gt;% names
 ## 2 OTU.2 1.706713 1.694977 0.01173536 0.5858306 307.9816  317.6640 310.1139
 ## 3 OTU.3 1.731520 1.696813 0.03470613 0.6078170 307.9925  317.6639 314.2921
 ## 4 OTU.4 1.730946 1.704892 0.02605382 0.7045621 308.0405  317.6636 312.7479
-## # ... with 1 more variables: A &lt;dbl&gt;
-</code></pre>
-
-<p>Next, let&#39;s calculate bootstrap confidence intervales for the atom fraction excess estimations. </p>
-
-<pre><code class="r"># calculating bootstrapped CI values
-df_atomX_boot = qSIP_bootstrap(atomX, n_boot=100)
-df_atomX_boot %&gt;% head(n=4)
-</code></pre>
-
+## # ... with 1 more variables: A &lt;dbl&gt;</code></pre>
+<p>Next, let’s calculate bootstrap confidence intervales for the atom fraction excess estimations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculating bootstrapped CI values</span>
+df_atomX_boot =<span class="st"> </span><span class="kw">qSIP_bootstrap</span>(atomX, <span class="dt">n_boot=</span><span class="dv">100</span>)
+df_atomX_boot %&gt;%<span class="st"> </span><span class="kw">head</span>(<span class="dt">n=</span><span class="dv">4</span>)</code></pre></div>
 <pre><code>## # A tibble: 4 x 11
 ##     OTU     Wlab   Wlight          Z        Gi   Mlight Mheavymax     Mlab
 ##   &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
@@ -324,86 +167,67 @@ df_atomX_boot %&gt;% head(n=4)
 ## 2 OTU.2 1.706713 1.694977 0.01173536 0.5858306 307.9816  317.6640 310.1139
 ## 3 OTU.3 1.731520 1.696813 0.03470613 0.6078170 307.9925  317.6639 314.2921
 ## 4 OTU.4 1.730946 1.704892 0.02605382 0.7045621 308.0405  317.6636 312.7479
-## # ... with 3 more variables: A &lt;dbl&gt;, A_CI_low &lt;dbl&gt;, A_CI_high &lt;dbl&gt;
-</code></pre>
-
+## # ... with 3 more variables: A &lt;dbl&gt;, A_CI_low &lt;dbl&gt;, A_CI_high &lt;dbl&gt;</code></pre>
+</div>
+<div id="delta_bd" class="section level1">
 <h1>delta_BD</h1>
-
 <p>Now for delta_BD. The setup is easier because we are not using qPCR data, just relative abundances from 16S rRNA sequence data.</p>
-
-<pre><code class="r">df_dBD = delta_BD(physeq_rep3, control_expr=&#39;Treatment==&quot;12C-Con&quot;&#39;)
-df_dBD %&gt;% head(n=4)
-</code></pre>
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_dBD =<span class="st"> </span><span class="kw">delta_BD</span>(physeq_rep3, <span class="dt">control_expr=</span><span class="st">'Treatment==&quot;12C-Con&quot;'</span>)
+df_dBD %&gt;%<span class="st"> </span><span class="kw">head</span>(<span class="dt">n=</span><span class="dv">4</span>)</code></pre></div>
 <pre><code>## # A tibble: 4 x 4
 ##     OTU CM_control CM_treatment   delta_BD
 ##   &lt;chr&gt;      &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;
 ## 1 OTU.1   1.694039     1.720067 0.02602843
 ## 2 OTU.2   1.690518     1.703567 0.01304837
 ## 3 OTU.3   1.686954     1.743139 0.05618485
-## 4 OTU.4   1.705739     1.726582 0.02084359
-</code></pre>
-
+## 4 OTU.4   1.705739     1.726582 0.02084359</code></pre>
+</div>
+<div id="comparing-results" class="section level1">
 <h1>Comparing results</h1>
+<p>Let’s plot the data and compare all of the results. First, let’s join all of the data into one table for plotting. We’ll also format it for plotting.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># checking &amp; joining data </span>
+<span class="kw">stopifnot</span>(<span class="kw">nrow</span>(df_atomX_boot) ==<span class="st"> </span><span class="kw">nrow</span>(df_dBD))
+df_j =<span class="st"> </span>dplyr::<span class="kw">inner_join</span>(df_atomX_boot, df_dBD, <span class="kw">c</span>(<span class="st">'OTU'</span>=<span class="st">'OTU'</span>))
+<span class="kw">stopifnot</span>(<span class="kw">nrow</span>(df_atomX_boot) ==<span class="st"> </span><span class="kw">nrow</span>(df_j))
 
-<p>Let&#39;s plot the data and compare all of the results. First, let&#39;s join all of the data into one table for plotting. We&#39;ll also format it for plotting. </p>
-
-<pre><code class="r"># checking &amp; joining data 
-stopifnot(nrow(df_atomX_boot) == nrow(df_dBD))
-df_j = dplyr::inner_join(df_atomX_boot, df_dBD, c(&#39;OTU&#39;=&#39;OTU&#39;))
-stopifnot(nrow(df_atomX_boot) == nrow(df_j))
-
-# formatting data for plotting
-df_j = df_j %&gt;%
-  dplyr::mutate(OTU = reorder(OTU, -delta_BD))
-</code></pre>
-
+<span class="co"># formatting data for plotting</span>
+df_j =<span class="st"> </span>df_j %&gt;%
+<span class="st">  </span>dplyr::<span class="kw">mutate</span>(<span class="dt">OTU =</span> <span class="kw">reorder</span>(OTU, -delta_BD))</code></pre></div>
 <p>OK. Time to plot!</p>
-
-<pre><code class="r"># plotting BD shift (Z)
-ggplot(df_j, aes(OTU)) +
-  geom_point(aes(y=Z), color=&#39;blue&#39;) +
-  geom_point(aes(y=delta_BD), color=&#39;red&#39;) +
-  geom_hline(yintercept=0, linetype=&#39;dashed&#39;, alpha=0.5) +
-  labs(x=&#39;OTU&#39;, y=&#39;BD shift (Z)&#39;) +
-  theme_bw() +
-  theme(
-    axis.text.x = element_blank()
-  )
-</code></pre>
-
-<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-10"/></p>
-
-<p>In the figure, red points are delta_BD and blue points are q-SIP. It&#39;s easy to see that delta_BD is a lot more variable than q-SIP. This is likely due to a high influence of compositional data artifacts on delta_BD versus q-SIP.</p>
-
-<p>Let&#39;s make a boxplot to show the difference in estimation variance between the two methods.</p>
-
-<pre><code class="r"># plotting BD shift (Z): boxplots
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plotting BD shift (Z)</span>
+<span class="kw">ggplot</span>(df_j, <span class="kw">aes</span>(OTU)) +
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y=</span>Z), <span class="dt">color=</span><span class="st">'blue'</span>) +
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y=</span>delta_BD), <span class="dt">color=</span><span class="st">'red'</span>) +
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept=</span><span class="dv">0</span>, <span class="dt">linetype=</span><span class="st">'dashed'</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">'OTU'</span>, <span class="dt">y=</span><span class="st">'BD shift (Z)'</span>) +
+<span class="st">  </span><span class="kw">theme_bw</span>() +
+<span class="st">  </span><span class="kw">theme</span>(
+    <span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>()
+  )</code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAEgCAIAAADkBlbXAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAfvElEQVR4nO3de1xUdf7H8e8wgNyERC6ioggieAVBa0lNbbU1IstLm1lLP7NttYebS8qv7VGt9tjU3HJbM81cK81q059btrnmytq6lWKyiOIFFUkpVAi8wzjAXH5/TDseh2FmVGbOzJfX869zvt8z44eZj/OeMzPnHI3ZbBYAAEAufmoXAAAA2h4BDwCAhAh4AAAkRMADACAhAh4AAAkR8AAASMhf7QJuxOuvv3769Gm1q3CVwWDw8/Pz8+O9VKtMJpPJZPL398lu9BgaySkayRU0klO+2EgTJky47bbbbAZ96Q+wqqioWLp0qdpVuKquri4sLCwoKEjtQryXTqfT6/WRkZFqF+LVaCSnaCRX0EhO+VYjGY3G2267bejQoS0DnjdxAABIiIAHAEBCBDwAABIi4AEAkBABDwCAhAh4AAAkRMC7WVVV4Natfnv3ql0HAKB9IeDdaflyER8f/otfBA4bJsaOFXq92gUBANoLAt5tTp4Us2ZdXf3nP8Uf/6heNQCA9oWAd5v//Md2ZNcuNeoAALRHBLzbxMTYjnTpokYdAID2iIB3m6wsMXToNSMzZqhUCgCg3SHg3SYgQGzdKubObb71VuOkSWL3bjFkiNo1AQDaC5+8mpzPiIwUr7xysa4uLCxMy7WbAAAexB48AAASIuABAJAQAQ8AgIQIeAAAJETAAwAgIQIeAAAJEfAAAEiIgAcAQEIEPAAAEiLgAQCQEAEPAICECHgAACREwAMAICECHgAACRHwAABIiIAHAEBCBDwAABIi4AEAkBABDwCAhAh4AAAk5K92ATfCZDJduXJF7SquQ3Nzs9lsVrsK72UwGMxms289p6qgkRyjkVxEIznmW41kNBpbm/LJgNdoNP7+vlS5n5+fbxXsYZYG5SFyikZyzGg0+tyLgypoJMd8q5E0Gk1rU77xB9jQaDQBAQFqV3EdtFqtbxXsYc3NzT73nKqCRnKsublZCMFD5BSN5JhvNZKfX6tftfMdPAAAEiLgAQCQEAEPAICECHgAACREwAMAICECHgAACRHwAABIiIAHAEBCBDwAABIi4AEAkBABDwCAhAh4AAAkRMADACAhAh4AAAkR8AAASIiABwBAQgQ8AAASIuABAJAQAQ8AgIQIeAAAJETAAwAgIQIeAAAJEfAAAEiIgAcAQEIEPAAAEiLgAQCQEAEPAICECHgAACREwAMAICECHgAACRHwAABIiIAHAEBCBDwAABIi4AEAkBABDwCAhPzdeu979+59++239Xp9WlrajBkzAgMDXZwtLi5euXLln//8Z7eWBwCArNy4B6/T6ZYsWZKfn79q1ar6+vrNmze7OPvDDz8sX77cbDa7rzYAAOTmxj344uLi5OTkhIQEIUR2dva6desmTpzodLa5ufnVV1+dOnXqRx99pLy3y5cvX7p0ybJsNBqNRqP7Km9zJpPJtwr2MMubOR4ip2gkx2gkF9FIjvlWIzmo040BX1dXFx0dbVmOjo6uq6tzZXb16tUjRoxITU21ubePP/542bJlluUBAwacP3/efZW3OZ1Op9Pp1K7C2/nWc6oKGskVNJJTNJIrfKWR1Al4G44/crfM7tix49KlSzk5OadOnbLZYOzYsX379rUsr127NiIiwk11trmLFy8GBwfb/P4ASo2NjY2NjeHh4WoX4tVoJKcaGxubmpo6duyodiFejUZyyrcaSZ2Aj4qKKi0ttSzX1dVFRUU5nS0pKSkrK/vlL39pMBguXLjw+OOPv/LKK506dRJCdO3atWvXrpbtP/jgg4CAAPdV3ua0Wq1vFexhzc3NGo2Gh8gpGsmx5uZmIQQPkVM0kmO+1Uh+fq3+ls6NAZ+RkfHWW29VV1fHxsYWFBQMHz7cMl5VVRUdHW13Ni8vz7rN/PnzV69e7b7yAACQmBsDPjQ0NC8vb9GiRUajMSUlJScnxzI+a9ashQsX9uvXz+4sAAC4ee79Dj4zMzMzM9NmcNOmTQ5mLbp3787uOwAAN4wz2QEAICECHgAACRHwAABIiIAHAEBCBDwAABIi4AEAkBABDwCAhJwcB19RUbF9+/aioqLq6mqTyRQXFzd06NAxY8YkJSV5pj4AAHADWt2D37p165133pmenr5y5cpLly6lpaVlZGTU19evWrVq8ODBd95559atWz1ZKAAAcJ39PfjJkyd/9913s2fP3rp1a8uLDjU1NW3cuHHevHmrV6/euHGj+4sEAADXx37Az5kz5yc/+YlGo7E7GxgYOHXq1Iceemj37t3urA0AANwg+x/Rf/rppx9//LHdqcrKyrlz5wohNBpNVlaWG0sDAAA3yn7AL168ePLkyTNnztTr9TZTZ86cWbJkifsLAwAAN67VH9nNmjXrvffey8rKKi8v92RBMjl2TNx7r+jbN/LWWzv85S9qVwMAaE9aDfiHH354z549jY2NmZmZ69ev92RNcqivFzk5YvNmUVfnd+CAZupUsWWL2jUBANoNRye66d+/f1FR0cSJE6dMmfLkk0+2/LgeDhQWCpvPPj78UKVSAADtj5Mz2YWGhq5Zs+add95Zs2ZNVlbW8ePHPVOWBBoanI8AAOAmLp2qdtq0aXv27NHr9RkZGRz47qKWRxiMG6dGHQCAdsnVc9EPGDCgqKjovvvu4yf0LoqNFZs3ix49flz99a/FL3+pakEAgPbE/oluDhw4kJiYaDMYFhb23nvvjR07dteuXe4vTAb33CMqKkRJyfmePYNjYoLULgcA0I7Y34OPjY0NCQlpOa7RaHJzc1euXGlZra2tdWNpUvD3F716GcPD1a4DANDO2A/47Ozs6dOnl5aWtnaz0tLS6dOnZ2dnu60wAABw4+x/RL9z586lS5fefffdcXFx/fv3T05OTk5O1mg05eXl5eXlhw4dOnXqVF5e3ptvvunhcgEAgCvsB3xgYGB+fv5vfvObzz//fNu2bZ999ll1dbUQokuXLkOGDHn++eezs7MDAgI8WyoAAHCV/YC3CAgIGD9+/Pjx4z1WDQAAaBOuHiYHAAB8CAEPAICECHgAACREwAMAICEnAT9mzBij0agcqa6unjBhgjtLAgAAN6vVX9G//PLLQojt27e//PLLWq3WOl5eXv711197ojQAAHCjWg34rVu3Wha2bdum0Wis41qt9o9//KPb6wIAADeh1YDfsWOHEGLIkCHbt2/393d0uDwAAPA29r+DHzlypOXUdUQ7AAC+yH5+V1RUPP744+np6d98883vfvc7Pz/b9wEvvfSS+2tzxGw2q1vAdTGbzb5VsCp4iJyikVzBQ+QUjeQKX3mIHNRpP+A//PDDN954Y9++fUKIffv2tQx4dRmNxoaGBrWruA5NTU02ByNAyWAwmM1m33pOVUEjOUYjuYhGcsy3GsnBU2k/4O+444477rhDCDFmzJjPPvtM+St6b6DVasPCwtSuwlV6vb5Dhw5BQUFqF+K9dDqdXq/3oedUFTSSUzSSK2gkp3yrka474FeuXJmWlpaVlfX8889/9dVXLTcYNWpUWxUHAADanP2Anzlz5pw5c7KyssaNG2d3A71e786qAABu0dSkdgXwFPsBf+LEifDwcEGQA4AsiorEk0+K//wnKjbWnJ8v5sxRuyC4mf2AT0hIsC43NjaeOXPGwQYAAC938aL4+c/FyZNCCFFTo5k7V3TrJqZMUbkquJWTw9w3bNjw6KOPttyP95XjBwAAQohdu35Md6uPPybgJeck4J955pkHHnhg/vz5ISEhnikIANDmTCbbEXbTpOck4M+ePfvMM88kJiZ6phoAgDvcfrvo2VNUVl4duf9+9aqBRzg5g82IESOOHj3qmVIAAG7SqZP48EMxYIAQQnTubH7pJfHww2rXBDezvwdvudKMECI3N/fXv/714cOHMzMzg4ODrRtwHDwA+JbbbxcHDojKyrMxMaHBwZzoRn72A97m8PeWZ57n8DkA8EWhoWbFBcAhM/sBT34DAODTnF9FZteuXRUVFUKIv//97xMmTJg3b14TZ0JCGyorC3j22dDZs8VHH/G7XrsuXxbz54spU8KfeCKgtFTtagD4CCe/ol+yZMncuXM3btwYFxeXm5s7YsSINWvWNDQ0vPrqq56pD5IrLBS33x5gWX7/fbFzp1i2TN2KvI3BIO6+W+zcKYQIFEKsWydKSkR6utplAfB6Tvbg//SnPy1evHjixIkbNmyIjY395JNPXn311Q0bNnimOMjP5ucdb7whfvhBpVK81DffWNL9quXLVSoFgE9xEvC1tbWjRo3SaDQFBQXjxo3TaDS9evWqqanxTHGQ34kTzkfat9OnnY8AQEtOPqLv06fPhg0boqKiPv3003/9619CiB07dnTr1s0jtaEdGDhQlJVdM9K3r0qleKmMDNuR225Tow4AvsbJHvyLL764dOnSpKSkjIyMoUOHLliwID8/f9asWZ4pDvJbtEgoL1y0bJkID1etGK+UlCSWLLm6OmyYmDtXvWoA+A4ne/ATJkwoLy8/fvx4VlaWEGL48OFffPHF6NGjPVIb2oHERLFvX9P69YZz50LuuUcMHKh2Qd7o6afFffeJf/3rckJCh5/+NJCDmAG4wknACyESEhKsF4cdOXKke8tBOxQRYXjkEb1eHxIZqXYp3ispSURENIaFBZDuDlRXa+rqtBkZwt/5CxsgP+fHwQOAl9PpxP33i6Sk4Ntui+jbV+zapXZBgBcg4AH4vHnzxKef/rh8/Lh4+GHB6bgAAh6Az/vnP69ZPXlSHDqkUimA1yDgAfi8sDDbkY4d1agD8CaOfoty9OjRdevWVVRUnDlzplu3bklJSbm5ub179/ZYcQDgil/8Qnz99dXVYcNEUpJ61QDewf4evNlszsvL69ev3wcffNDQ0NC7d+/Lly+vW7cuNTV17ty5Zq4IAsCbPPGEWL5c9Otn6tbNNG2a+PhjweEGgP09+JUrV77xxhvvv//+gw8+6Of345sAo9G4fv363NzcPn36PPHEEx4sEgCcePJJ8T//o9fr9ZEcbwkIIVrbg1+7du3cuXMfeugha7oLIbRa7dSpU+fMmbNmzRoPVQcAAG6I/YDft2/fHXfcYXdq5MiRJSUl7iwJ7YjZLBYsEH36BPfu3WniRPH992oXBACysP8RfWNjY6dOnexORUZG6vV6d5aEduT118XzzwshNEKITz4RlZWiqEj4cWwHANw0XkqhpvXrr1ndu1ccO6ZSKQAgl1YPk3v22Wc7d+7ccvzs2bPurAftS8sPgxob1agDAKRjP+Dvu+8+IYTBYGg5FRERYZkFbl52tlD+oiM5WfTvr141ACAR+wG/adMmD9eB9umFF0RVlVi7VgghBgwQ773HdcBa8be/hezYoe3eXTz2mLjlFrWrAeADruPV9OzZs4GBgR05AyTaTocOYs0a8corurNnm1JTya1WPPaYePfdEMvyG2+InTtFXJy6FQHwfq3+yO4f//jHjBkznn322ZKSErPZPH369KioqPDw8PHjx/M1PNpWaKiIiTGpXYW32r9fvPvu1dUTJ8Qf/qBeNQB8hv09+DVr1kybNi09Pb1jx44rVqyYOXPmjh07Nm7caDKZ8vPz8/Pz33nnHVfufe/evW+//bZer09LS5sxY0ZgYKDT2YKCgr/+9a96vT4+Pn7mzJldu3a9+T8S8GFHjjgfAYAW7O/B/+EPf3jqqaf27t375Zdfvv7664sXL168ePGkSZMeeOCBhQsXbtmyxZW71ul0S5Ysyc/PX7VqVX19/ebNm53Onjp1auXKlS+++OLq1av79Onz2muv3fxfCPi2Pn1sR1JT1agDgI+xH/Dl5eX33nuvRqMRQowfP14I0bNnT8tUr169ampqXLnr4uLi5OTkhIQErVabnZ29c+dOp7N1dXV33XVXbGysv7//qFGjzpw5czN/GyCDwYNFbu7V1YQEkZ+vXjUAfIb9j+gNBkPYfy+wbPlVnea/12bSuHyRprq6uujoaMtydHR0XV2d09m0tLS0tDQhRFNT01/+8pcRI0ZYt9+8efP6/54VJTAw8MKFCy6W4Q10Oh2n/3PAZDKZTCbfek496k9/Chg71m/PHnOXLs1Tp5pDQgSPlT00kot4RXLMtxrJaDS2NuW5Y5IcX2RWOVtYWPjuu+/eeuut06ZNsw527NixW7duluWzZ89qtVo31dnmDAaDn5+fDxWsCrPZzEPkgOm++66MG+fv78+j5BiN5BSvSK6Qo5FaDfjly5dbjoY3mUxCiGXLlsXFxQkhTp065eJdR0VFlZaWWpbr6uqioqKczprN5pUrV544ceKFF16Ij49Xbj9y5MiRI0dalmfPnu1DR+s1NjYGBQUFBQWpXYj3suxP+NBzqgoaySkayRU0klO+1UjXvQefkpJSVFRUVFRkXf3mm2+Us678qxkZGW+99VZ1dXVsbGxBQcHw4cMt41VVVdHR0XZnS0pKysrKXnvtNQneOgEAoCL7AX+kLY7DCQ0NzcvLW7RokdFoTElJycnJsYzPmjVr4cKF/fr1azl78ODBysrKn//855YtQ0JC1q1bd/OVAADQ3rj3O/jMzMzMzEybQet5cFvO5ubm5ip/MAwAAG4Il4sFAEBCBDwAABIi4AEAkBABDwCAhAh4AAAkRMADACAhAh6AFAwGv6++CvjHP8QPP6hdCuAVPHcuegBwl9paMWZMUGnpj+df3bhRTJqkbkWA6tiDB+D7nn1W/PfaFkIIMXmy0OnUqwbwCgQ8AN+nuFjGjw4eVKMOwIsQ8AB8X5cutiNdu6pRB+BFCHgAvu+pp65ZnTRJdO+uUimAt+BHdgB83733im3bjMuXm86dC8jOFrNnq10QoD4CHoAUxo5tHDZMr9dHRkaqXQrgFfiIHgAACRHwAABIiIAHAEBCBDwAABIi4AEAkBABDwCAhAh4AGgfKirEpEmRAwYEZmWJDRvUrsZb/d//dcjODh89Wvzv/4pLl9Su5qZwHDwAtAM6nbjnHnH0qJ8QoqZGPPigCA8X48apXZaX+egj8dBDWstyaanYv19s3So0GnWLumHswQNAO1BYKI4evWbk/fdVKsWLrVp1zeq2beLkSXUqaQsEPAC0A5cvOx9BXZ3zEd9BwANAO5CVZTty111q1OHdRoy4ZjU+XgwcqFIpbYCAB4B2IDZWfPqpiI//cfVXvxIzZ6pakFdasMDwk+GWxabYePHWWyIoSN2KbgY/sgOA9mH8eDFu3PmiopDExA5xcWpX443Ka28Ze/rLW0RpuLi0ryb9d4c6zr1b7ZpuAnvwANBuBAYaU1LMnTqpXYeXeu45UfmdZr9I+0qMuCw65ueL8+fVrukmEPAAAAghxKFDtiNHjqhRRxsh4AEAEEKIxETbkaQkNepoIwQ8AABCCDFv3jWreXkiJkalUtoCP7IDAEAIIYYMEeXlYtWq5nPnjDk5Qfffr3ZBN4eABwDgR717i/nzm/V6fWSkDx8gZ8FH9AAASIiABwBAQj75Eb3RaLx48aLaVVyHK1euNDY2ql2F9zKZTCaTybeeU1XQSI6ZTCaz2UwjOUUjOeZbjWQ0Glub8smA12q1ERERalfhqrq6uuDg4CBfPt+hu+l0Or1e70PPqSpoJKdoJFfQSE75ViM5CHg+ogcAQEIEPAAAEiLgAQCQEAEPAICECHgAACREwAMAICECHgAACRHwAABIiIAHAEBCBDwAABIi4AEAkBABDwCAhAh4AAAkRMADACAhAh4AAAkR8AAASIiABwBAQgQ8AAASIuABAJAQAQ8AgIQIeAAAJETAAwAgIQIeAAAJEfAAAEiIgAcAQEIEPAAAEiLgAQCQEAEPAICECHgAACREwAMAICECHgAACRHwAABIiIAHAEBCBDwAABIi4AEAkJC/W+997969b7/9tl6vT0tLmzFjRmBgoNNZxzcBAACucOMevE6nW7JkSX5+/qpVq+rr6zdv3ux01vFNAACAi9wY8MXFxcnJyQkJCVqtNjs7e+fOnU5nHd8EAAC4yI0f0dfV1UVHR1uWo6Oj6+rqnM46uMmxY8cOHjxoWT5//nxhYaF1KiAgYMCAAco7r62traqqUo707t27Y8eO1lWj0VhaWqrcoFOnTgkJCcqREydOXLhwQTmSnp6u0WisqxcvXvz222+VG8THx0dFRSlHDhw4cOnSpcDAQH9/fyFESEhISkqKcoPTp0/X1NQoR1JTU4ODg62rer2+rKxMuUFMTEy3bt2UI8eOHWtoaLCuarXaQYMGKTc4e/bsd999pxxJTEyMiIhQjpSUlChXIyIiEhMTlSOVlZXnzp1TjgwcONDyd1nU19eXl5crN+jWrVtMTIxy5NChQ01NTdbVDh069OvXz2AwmM1mvV4vhKiurj5z5ozyJn369AkNDbWuNjc3WzvBonPnzj169FCOHD9+/PLly9ZVjUaTnp6u3ODChQsnTpxQjiQkJHTq1Ek5sn//fpPJZF0NCwtLTk5WblBVVVVbW6sc6d+/v/JLJZ1Od/ToUeUGXbp0iYuLU44cOXLkypUr1lUHzazT6SyNlJSUFB4ebt3Ak81sMBisqzfQzI2NjYcPH1Zu0LbNbG0km2YODw9PSkpSjrivmZUb1NTUnD59WjnimWbu2bNnZGSkckTZzDqdLjIysm/fvsoNPNzMVjbNbDKZ9u/fr9zAlWZOS0vz87u6s3rzzWwwGE6fPm3z97qjmc+dO1dZWakccfrK3LKZbZ59Jfd+B69kNpuvd1Y5WFhYuGzZMstyTEzMJ598Yp2KiIiw6YDDhw9v375dOTJlyhTlf5umpiblPQgh+vXrZ9MBhYWFR44cUY4kJiZqtVrramVlpc2d3HXXXTb/97Zs2aJ8grt27WrTAfv27du9e7dyZPr06Z07d7aunjt3zuZfGTp0qE0H7NixQ/nfJjg42Cabjx079vnnnytHJkyYYBNXNv9KcnKyzcvZnj17Dhw4oByJj48PCgqyrn7//fc2dzJ69OiQkBDlyLZt286fP29djYqKsj4v9fX1QoiDBw9++eWXyps88sgjXbt2ta7W19fb/Cvp6ek2L2dff/218n+4Vqvt3bu3coPjx4//7W9/U47k5OTYvDp/9tlnypfvnj172rycFRcXFxcXK0diY2OVr1Y1NTU2pQ4bNkz5RlMIsX37dmUohoeHO23mBx98sGfPntZVjzXz559/bnmOLFxp5scee0xZyfnz550287///e/vv//euhoUFHS9zdyyQ5KTk2NjY5UjLZu5e/fuypfvqqoqp81cUFCgfJfQMpsPHDjguJkbGhpUaeYePXrEx8crN2jZzDExMcqn5ocffvDaZu7Vq5fyzdl3331ncydjx44dPHiwcsSmmePi4myauby8XLkbKdzWzFu2bFGOtHxl3rRpkzIKe/fubdPMRUVFojVmt/nyyy/nz59vWd63b19eXp7TWcc3sXrqqafcVbQb1NbWXrlyRe0qvFpDQ8PZs2fVrsLb0UhO0UiuoJGc8q1GMhgMmZmZGzdubDnlxu/gMzIyysvLq6urzWZzQUHB8OHDLeNVVVWNjY12Z1u7CQAAuC5u/Ig+NDQ0Ly9v0aJFRqMxJSUlJyfHMj5r1qyFCxf269ev5WxrNwEAANfFvd/BZ2ZmZmZm2gxu2rTJwazdQQAAcF04kx0AABIi4AEAkBABDwCAhAh4AAAkRMADACAhAh4AAAl57lS1bai2tnbIkCFqVwEAgFdQno3fyicDfsqUKcrzmXszo9G4YsWK0aNH21x0AUq7d+8+fPjwY489pnYh3stkMi1fvpxGcqywsLCsrIxGcoBGcsXu3bsPHTo0ffp0tQtxlb+//5133mln3POl3Lzx48erXYKrmpubV6xYkZWVNXHiRLVr8V4NDQ0nT5589NFH1S7EexkMhuXLl9NIjtFITtFIrtDpdN9++60EjcR38AAASEg7f/58tWuQmUajiY6OHjx4sM21xqEUGhqakpJic5FE2KCRnKKRXEEjORUaGpqamipBI2nMDi/TDgAAfBEf0QMAICECHgAACRHwAABIiIAHAEBCBDwAABIi4AEAkBABD8BWc3PzokWLRowYER4enpqa+vDDD5eVlQkh7r//fo09OTk5QohRo0Y9/vjjNnfVpUuXl19+WYW/AWj3fPJUtQDc5/z58z/72c8qKiqefvrp55577tSpU+vXr8/IyFizZs3ixYt/+9vfCiEqKioeeeSRtWvX9unTRwhxyy23qF01AFsEPIBrvPDCC6dOnSopKenRo4dlZNq0aXl5eb/61a/Ky8tTUlKEEGFhYUKIQYMGpaenq1krgNbxET2Aq2pqat58883f//731nQXQvj5+S1YsCAoKGjp0qUq1gbguhDwAK46ePCgyWS65557bMbDwsJGjhy5b98+VaoCcAMIeABXVVRUBAcHx8TEtJxKTEwsLy/3fEkAbgwBD+Cq7t27X7ly5cKFCy2nzpw507VrV8+XBODGEPAArho4cKAQ4osvvrAZb25u/uqrrwYNGuTgtoGBgXq9XjliNpv1en2HDh3avE4AThHwAK6Kj4+fOnXqM888U1tbax00m80LFiw4ffr07NmzHdy2f//+hYWFyowvLi6+ePGi47cFANyE68EDuEZ1dfXo0aMvXLjw9NNPDxo0qKamZuPGjVu3bl2xYoX1PDYHDx4cOHBgSUmJ8jC5EydOpKenp6WlzZo1Kyoq6tChQ4sWLUpNTS0oKNBqtSr9NUD7RcADsHXlypVFixZt27bt0KFDXbp0GTx48HPPPZeWlmbdwG7ACyHKysrmzZu3e/fu2traXr16TZ48OT8/v2PHjh7/CwAQ8AAAyIjv4AEAkBABDwCAhAh4AAAkRMADACAhAh4AAAkR8AAASOj/AZEhsM17ZGrNAAAAAElFTkSuQmCC" /><!-- --></p>
+<p>In the figure, red points are delta_BD and blue points are q-SIP. It’s easy to see that delta_BD is a lot more variable than q-SIP. This is likely due to a high influence of compositional data artifacts on delta_BD versus q-SIP.</p>
+<p>Let’s make a boxplot to show the difference in estimation variance between the two methods.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plotting BD shift (Z): boxplots</span>
 
 ## formatting the table
-df_j_g = df_j %&gt;%
-  dplyr::select(OTU, Z, delta_BD) %&gt;%
-  tidyr::gather(Method, BD_shift, Z, delta_BD) %&gt;%
-  mutate(Method = ifelse(Method == &#39;Z&#39;, &#39;q-SIP&#39;, &#39;delta-BD&#39;))
+df_j_g =<span class="st"> </span>df_j %&gt;%
+<span class="st">  </span>dplyr::<span class="kw">select</span>(OTU, Z, delta_BD) %&gt;%
+<span class="st">  </span>tidyr::<span class="kw">gather</span>(Method, BD_shift, Z, delta_BD) %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Method =</span> <span class="kw">ifelse</span>(Method ==<span class="st"> 'Z'</span>, <span class="st">'q-SIP'</span>, <span class="st">'delta-BD'</span>))
 
 ## plotting 
-ggplot(df_j_g, aes(Method, BD_shift)) +
-  geom_boxplot() +
-  geom_hline(yintercept=0, linetype=&#39;dashed&#39;, alpha=0.5) +
-  labs(x=&#39;Method&#39;, y=&#39;BD shift (Z)&#39;) +
-  theme_bw() 
-</code></pre>
-
-<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-11"/></p>
-
+<span class="kw">ggplot</span>(df_j_g, <span class="kw">aes</span>(Method, BD_shift)) +
+<span class="st">  </span><span class="kw">geom_boxplot</span>() +
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept=</span><span class="dv">0</span>, <span class="dt">linetype=</span><span class="st">'dashed'</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">'Method'</span>, <span class="dt">y=</span><span class="st">'BD shift (Z)'</span>) +
+<span class="st">  </span><span class="kw">theme_bw</span>() </code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>The boxplot helps to summarize how much more variance delta_BD produces versus q-SIP.</p>
-
+</div>
+<div id="session-info" class="section level1">
 <h1>Session info</h1>
-
-<pre><code class="r">sessionInfo()
-</code></pre>
-
-<pre><code>## R version 3.4.2 (2017-09-28)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.4.3 (2017-11-30)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 16.04.3 LTS
 ## 
@@ -423,62 +247,73 @@ ggplot(df_j_g, aes(Method, BD_shift)) +
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] bindrcpp_0.2    phyloseq_1.20.0 HTSSIP_1.3.0    ggplot2_2.2.1  
+## [1] bindrcpp_0.2    phyloseq_1.20.0 HTSSIP_1.3.1    ggplot2_2.2.1  
 ## [5] tidyr_0.7.2     dplyr_0.7.4    
 ## 
 ## loaded via a namespace (and not attached):
 ##   [1] nlme_3.1-131               bitops_1.0-6              
 ##   [3] matrixStats_0.52.2         bit64_0.9-7               
 ##   [5] doParallel_1.0.11          RColorBrewer_1.1-2        
-##   [7] GenomeInfoDb_1.12.3        tools_3.4.2               
-##   [9] backports_1.1.1            R6_2.2.2                  
-##  [11] coenocliner_0.2-2          vegan_2.4-4               
-##  [13] rpart_4.1-11               Hmisc_4.0-3               
-##  [15] DBI_0.7                    lazyeval_0.2.0            
-##  [17] BiocGenerics_0.22.1        mgcv_1.8-22               
-##  [19] colorspace_1.3-2           permute_0.9-4             
-##  [21] ade4_1.7-8                 nnet_7.3-12               
-##  [23] tidyselect_0.2.2           gridExtra_2.3             
-##  [25] DESeq2_1.16.1              bit_1.1-12                
-##  [27] compiler_3.4.2             Biobase_2.36.2            
-##  [29] htmlTable_1.9              DelayedArray_0.2.7        
-##  [31] labeling_0.3               scales_0.5.0              
-##  [33] checkmate_1.8.5            genefilter_1.58.1         
-##  [35] stringr_1.2.0              digest_0.6.12             
-##  [37] foreign_0.8-69             XVector_0.16.0            
-##  [39] base64enc_0.1-3            pkgconfig_2.0.1           
-##  [41] htmltools_0.3.6            highr_0.6                 
-##  [43] htmlwidgets_0.9            rlang_0.1.2               
-##  [45] RSQLite_2.0                bindr_0.1                 
-##  [47] jsonlite_1.5               BiocParallel_1.10.1       
-##  [49] acepack_1.4.1              RCurl_1.95-4.8            
-##  [51] magrittr_1.5               GenomeInfoDbData_0.99.0   
-##  [53] Formula_1.2-2              biomformat_1.4.0          
-##  [55] Matrix_1.2-11              Rcpp_0.12.13              
-##  [57] munsell_0.4.3              S4Vectors_0.14.7          
-##  [59] ape_4.1                    stringi_1.1.5             
-##  [61] MASS_7.3-47                SummarizedExperiment_1.6.5
-##  [63] zlibbioc_1.22.0            rhdf5_2.20.0              
-##  [65] plyr_1.8.4                 blob_1.1.0                
-##  [67] grid_3.4.2                 parallel_3.4.2            
-##  [69] lattice_0.20-35            Biostrings_2.44.2         
-##  [71] splines_3.4.2              multtest_2.32.0           
-##  [73] annotate_1.54.0            locfit_1.5-9.1            
-##  [75] knitr_1.17                 igraph_1.1.2              
-##  [77] GenomicRanges_1.28.6       markdown_0.8              
-##  [79] geneplotter_1.54.0         reshape2_1.4.2            
-##  [81] codetools_0.2-15           stats4_3.4.2              
-##  [83] XML_3.98-1.9               glue_1.1.1                
-##  [85] evaluate_0.10.1            latticeExtra_0.6-28       
-##  [87] data.table_1.10.4-2        foreach_1.4.3             
-##  [89] gtable_0.2.0               purrr_0.2.4               
-##  [91] assertthat_0.2.0           mime_0.5                  
+##   [7] rprojroot_1.2              GenomeInfoDb_1.12.3       
+##   [9] tools_3.4.3                backports_1.1.1           
+##  [11] R6_2.2.2                   coenocliner_0.2-2         
+##  [13] vegan_2.4-4                rpart_4.1-11              
+##  [15] Hmisc_4.0-3                DBI_0.7                   
+##  [17] lazyeval_0.2.0             BiocGenerics_0.22.1       
+##  [19] mgcv_1.8-22                colorspace_1.3-2          
+##  [21] permute_0.9-4              ade4_1.7-8                
+##  [23] nnet_7.3-12                tidyselect_0.2.2          
+##  [25] gridExtra_2.3              DESeq2_1.16.1             
+##  [27] bit_1.1-12                 compiler_3.4.3            
+##  [29] Biobase_2.36.2             htmlTable_1.9             
+##  [31] DelayedArray_0.2.7         labeling_0.3              
+##  [33] scales_0.5.0               checkmate_1.8.5           
+##  [35] genefilter_1.58.1          stringr_1.2.0             
+##  [37] digest_0.6.12              foreign_0.8-69            
+##  [39] rmarkdown_1.6              XVector_0.16.0            
+##  [41] base64enc_0.1-3            pkgconfig_2.0.1           
+##  [43] htmltools_0.3.6            htmlwidgets_0.9           
+##  [45] rlang_0.1.2                RSQLite_2.0               
+##  [47] bindr_0.1                  jsonlite_1.5              
+##  [49] BiocParallel_1.10.1        acepack_1.4.1             
+##  [51] RCurl_1.95-4.8             magrittr_1.5              
+##  [53] GenomeInfoDbData_0.99.0    Formula_1.2-2             
+##  [55] biomformat_1.4.0           Matrix_1.2-11             
+##  [57] Rcpp_0.12.13               munsell_0.4.3             
+##  [59] S4Vectors_0.14.7           ape_4.1                   
+##  [61] stringi_1.1.5              yaml_2.1.14               
+##  [63] MASS_7.3-47                SummarizedExperiment_1.6.5
+##  [65] zlibbioc_1.22.0            rhdf5_2.20.0              
+##  [67] plyr_1.8.4                 blob_1.1.0                
+##  [69] grid_3.4.3                 parallel_3.4.3            
+##  [71] lattice_0.20-35            Biostrings_2.44.2         
+##  [73] splines_3.4.3              multtest_2.32.0           
+##  [75] annotate_1.54.0            locfit_1.5-9.1            
+##  [77] knitr_1.17                 igraph_1.1.2              
+##  [79] GenomicRanges_1.28.6       geneplotter_1.54.0        
+##  [81] reshape2_1.4.2             codetools_0.2-15          
+##  [83] stats4_3.4.3               XML_3.98-1.9              
+##  [85] glue_1.1.1                 evaluate_0.10.1           
+##  [87] latticeExtra_0.6-28        data.table_1.10.4-2       
+##  [89] foreach_1.4.3              gtable_0.2.0              
+##  [91] purrr_0.2.4                assertthat_0.2.0          
 ##  [93] xtable_1.8-2               survival_2.41-3           
 ##  [95] tibble_1.3.4               iterators_1.0.8           
 ##  [97] memoise_1.1.0              AnnotationDbi_1.38.2      
-##  [99] IRanges_2.10.5             cluster_2.0.6
-</code></pre>
+##  [99] IRanges_2.10.5             cluster_2.0.6</code></pre>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 </body>
-
 </html>
