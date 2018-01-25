@@ -30,7 +30,7 @@ test_that('phyloseq otu_table can be converted to dataframe',{
 
 #-- other dataset --#
 
-test_that('phyloseq-rep sample_data can be converted to dataframe',{
+test_that('phyloseq_re sample_data can be converted to dataframe',{
   df1 = phyloseq2df(physeq_rep3, phyloseq::sample_data)
   df2 = suppressWarnings(as.data.frame(as.matrix(sample_data(physeq_rep3))))
 

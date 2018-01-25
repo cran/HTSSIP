@@ -12,7 +12,6 @@ test_that('DESeq2_l2fc runs with default params',{
 })
 
 test_that('DESeq2_l2fc runs with sparsity_apply=heavy',{
-  skip_on_cran()
   df_l2fc = DESeq2_l2fc(physeq_S2D2_l[[1]],
                         sparsity_threshold=0.25,
                         density_min=1.71,

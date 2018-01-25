@@ -1,7 +1,6 @@
 # test_file('~/dev/HTSSIP/tests/testthat/test-heavy_SIP.R')
 
 test_that('heavy-SIP runs on replicated dataset with default settings',{
-
   # Calculating heavy-SIP on replicated dataset
   data(physeq_rep3)
   ## default
@@ -25,8 +24,6 @@ test_that('heavy-SIP runs on replicated dataset with default settings',{
 
 
 test_that('heavy-SIP runs on non-rep dataset with default settings',{
-  skip_on_cran()
-
   # Calculating heavy-SIP on replicated dataset
   data(physeq_S2D2_l)
 
@@ -49,7 +46,6 @@ test_that('heavy-SIP runs on non-rep dataset with default settings',{
 })
 
 test_that('heavy-SIP runs on replicated dataset with t-test',{
-  skip_on_cran()
   # Calculating heavy-SIP on replicated dataset
 
   ## default
@@ -74,7 +70,6 @@ test_that('heavy-SIP runs on replicated dataset with t-test',{
 
 
 test_that('heavy-SIP runs on replicated dataset with wilcox',{
-  skip_on_cran()
   # Calculating heavy-SIP on replicated dataset
 
   ## default

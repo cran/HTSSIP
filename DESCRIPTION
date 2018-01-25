@@ -2,12 +2,12 @@ Package: HTSSIP
 Type: Package
 Title: High Throughput Sequencing of Stable Isotope Probing Data
         Analysis
-Version: 1.3.1
+Version: 1.3.2
 Authors@R: c(
-    person("Nicholas", "Youngblut", email="nyoungb2@gmail.com", role=c("aut", "cre")),
-    person("Samuel", "Barnett", email="seb369@cornell.edu", role=c("ctb"))
+    person("Nicholas", "Youngblut", email="nyoungb2@gmail.com", role=c("aut")),
+    person("Samuel", "Barnett", email="seb369@cornell.edu", role=c("cre", "ctb"))
     )
-Maintainer: Nicholas Youngblut <nyoungb2@gmail.com>
+Maintainer: Samuel Barnett <seb369@cornell.edu>
 Description: Functions for analyzing high throughput sequencing 
     stable isotope probing (HTS-SIP) data.
     Analyses include high resolution stable isotope probing (HR-SIP),
@@ -25,8 +25,8 @@ RoxygenNote: 6.0.1
 Suggests: testthat, knitr, rmarkdown, doParallel
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2018-01-10 16:39:52 UTC; nick
-Author: Nicholas Youngblut [aut, cre],
-  Samuel Barnett [ctb]
+Packaged: 2018-01-23 18:11:04 UTC; sam
+Author: Nicholas Youngblut [aut],
+  Samuel Barnett [cre, ctb]
 Repository: CRAN
-Date/Publication: 2018-01-11 10:12:57 UTC
+Date/Publication: 2018-01-25 14:44:49 UTC
