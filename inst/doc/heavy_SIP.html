@@ -12,7 +12,7 @@
 
 <meta name="author" content="Nick Youngblut" />
 
-<meta name="date" content="2018-01-23" />
+<meta name="date" content="2018-05-14" />
 
 <title>heavy-SIP</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">heavy-SIP</h1>
 <h4 class="author"><em>Nick Youngblut</em></h4>
-<h4 class="date"><em>2018-01-23</em></h4>
+<h4 class="date"><em>2018-05-14</em></h4>
 
 
 <div id="TOC">
@@ -96,7 +96,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1>Introduction</h1>
 <div id="heavy-sip-method-workflow" class="section level2">
 <h2>heavy-SIP method workflow:</h2>
-<p>Prior to the development of these HTS-SIP analysis methods, DNA- and RNA-SIP experiments that utilized Sanger or high throughput sequencing were usually analyzed with standard statistical processes (e.g. t-tests), in order to identify incorporators. Previous work suggests that these methods generally have low senstivity and/or high false positive rates when applied to sequence data. Here, these analysis methods will be referred to “heavy-SIP” methods. While the work of Youngblut et al., (<a href="https://doi.org/10.1101/138719" class="uri">https://doi.org/10.1101/138719</a>) suggests that HR-SIP analysis methods (eg., MW-HR-SIP) should be used for processing HTS-SIP datasets, the HTSSIP R package provides heavy-SIP methods so researchers have the option of using these methods and making their own comparisons to HR-SIP methods.</p>
+<p>Prior to the development of these HTS-SIP analysis methods, DNA- and RNA-SIP experiments that utilized Sanger or high throughput sequencing were usually analyzed with standard statistical processes (e.g. t-tests), in order to identify incorporators. Previous work suggests that these methods generally have low senstivity and/or high false positive rates when applied to sequence data. Here, these analysis methods will be referred to “heavy-SIP” methods. While the work of Youngblut et al., (<a href="https://doi.org/10.3389/fmicb.2018.00570" class="uri">https://doi.org/10.3389/fmicb.2018.00570</a>) suggests that HR-SIP analysis methods (eg., MW-HR-SIP) should be used for processing HTS-SIP datasets, the HTSSIP R package provides heavy-SIP methods so researchers have the option of using these methods and making their own comparisons to HR-SIP methods.</p>
 <p>heavy-SIP is performed with the <code>heavy_SIP()</code> function, which consists of multiple possible tests. See <code>?heavy_SIP</code> for more details. This vignette demonstrates the use of <code>heavy_SIP()</code>.</p>
 </div>
 </div>
@@ -118,31 +118,31 @@ padj_cutoff =<span class="st"> </span><span class="fl">0.1</span></code></pre></
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">physeq_S2D2_l</code></pre></div>
 <pre><code>## $`(Substrate=='12C-Con' &amp; Day=='3') | (Substrate=='13C-Cel' &amp; Day == '3')`
 ## phyloseq-class experiment-level object
-## otu_table()   OTU Table:         [ 10001 taxa and 46 samples ]
+## otu_table()   OTU Table:         [ 1072 taxa and 46 samples ]
 ## sample_data() Sample Data:       [ 46 samples by 17 sample variables ]
-## tax_table()   Taxonomy Table:    [ 10001 taxa by 8 taxonomic ranks ]
-## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]
+## tax_table()   Taxonomy Table:    [ 1072 taxa by 8 taxonomic ranks ]
+## phy_tree()    Phylogenetic Tree: [ 1072 tips and 1071 internal nodes ]
 ## 
 ## $`(Substrate=='12C-Con' &amp; Day=='14') | (Substrate=='13C-Cel' &amp; Day == '14')`
 ## phyloseq-class experiment-level object
-## otu_table()   OTU Table:         [ 10001 taxa and 46 samples ]
+## otu_table()   OTU Table:         [ 1072 taxa and 46 samples ]
 ## sample_data() Sample Data:       [ 46 samples by 17 sample variables ]
-## tax_table()   Taxonomy Table:    [ 10001 taxa by 8 taxonomic ranks ]
-## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]
+## tax_table()   Taxonomy Table:    [ 1072 taxa by 8 taxonomic ranks ]
+## phy_tree()    Phylogenetic Tree: [ 1072 tips and 1071 internal nodes ]
 ## 
 ## $`(Substrate=='12C-Con' &amp; Day=='14') | (Substrate=='13C-Glu' &amp; Day == '14')`
 ## phyloseq-class experiment-level object
-## otu_table()   OTU Table:         [ 10001 taxa and 47 samples ]
+## otu_table()   OTU Table:         [ 1072 taxa and 47 samples ]
 ## sample_data() Sample Data:       [ 47 samples by 17 sample variables ]
-## tax_table()   Taxonomy Table:    [ 10001 taxa by 8 taxonomic ranks ]
-## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]
+## tax_table()   Taxonomy Table:    [ 1072 taxa by 8 taxonomic ranks ]
+## phy_tree()    Phylogenetic Tree: [ 1072 tips and 1071 internal nodes ]
 ## 
 ## $`(Substrate=='12C-Con' &amp; Day=='3') | (Substrate=='13C-Glu' &amp; Day == '3')`
 ## phyloseq-class experiment-level object
-## otu_table()   OTU Table:         [ 10001 taxa and 46 samples ]
+## otu_table()   OTU Table:         [ 1072 taxa and 46 samples ]
 ## sample_data() Sample Data:       [ 46 samples by 17 sample variables ]
-## tax_table()   Taxonomy Table:    [ 10001 taxa by 8 taxonomic ranks ]
-## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]</code></pre>
+## tax_table()   Taxonomy Table:    [ 1072 taxa by 8 taxonomic ranks ]
+## phy_tree()    Phylogenetic Tree: [ 1072 tips and 1071 internal nodes ]</code></pre>
 </div>
 </div>
 <div id="one-treatment-control-comparison" class="section level1">
@@ -151,10 +151,10 @@ padj_cutoff =<span class="st"> </span><span class="fl">0.1</span></code></pre></
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">physeq =<span class="st"> </span>physeq_S2D2_l[[<span class="dv">1</span>]]
 physeq</code></pre></div>
 <pre><code>## phyloseq-class experiment-level object
-## otu_table()   OTU Table:         [ 10001 taxa and 46 samples ]
+## otu_table()   OTU Table:         [ 1072 taxa and 46 samples ]
 ## sample_data() Sample Data:       [ 46 samples by 17 sample variables ]
-## tax_table()   Taxonomy Table:    [ 10001 taxa by 8 taxonomic ranks ]
-## phy_tree()    Phylogenetic Tree: [ 10001 tips and 10000 internal nodes ]</code></pre>
+## tax_table()   Taxonomy Table:    [ 1072 taxa by 8 taxonomic ranks ]
+## phy_tree()    Phylogenetic Tree: [ 1072 tips and 1071 internal nodes ]</code></pre>
 <p>Let’s check that the samples belong to either a 13C-treatment or 12C-control.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">physeq %&gt;%<span class="st"> </span>sample_data %&gt;%<span class="st"> </span>.$Substrate %&gt;%<span class="st"> </span>table</code></pre></div>
 <pre><code>## .
@@ -164,16 +164,16 @@ physeq</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_res =<span class="st"> </span><span class="kw">heavy_SIP</span>(physeq, <span class="dt">ex=</span><span class="st">&quot;Substrate=='12C-Con'&quot;</span>, 
                    <span class="dt">comparison=</span><span class="st">'H-v-H'</span>, <span class="dt">hypo_test=</span><span class="st">'binary'</span>)
 df_res %&gt;%<span class="st"> </span><span class="kw">head</span>(<span class="dt">n=</span><span class="dv">3</span>)</code></pre></div>
-<pre><code>##          statistic  p padj
-## OTU.514          0 NA   NA
-## OTU.816          0 NA   NA
-## OTU.1099         0 NA   NA</code></pre>
+<pre><code>##         statistic  p padj
+## OTU.514         0 NA   NA
+## OTU.729         0 NA   NA
+## OTU.322         0 NA   NA</code></pre>
 <p>Since no real statistical test, the “statistic” is just 0 (not an incorporator) or 1 (an incorporator). Also, the “p” and “padj” columns are thus “NA”.</p>
 <p>How many “incorporators”?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_res$statistic %&gt;%<span class="st"> </span>table</code></pre></div>
 <pre><code>## .
-##    0    1 
-## 3301  957</code></pre>
+##   0   1 
+## 980  65</code></pre>
 </div>
 <div id="replicated-dataset" class="section level1">
 <h1>Replicated dataset</h1>
@@ -256,7 +256,7 @@ df_res %&gt;%<span class="st"> </span><span class="kw">head</span>(<span class="
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] bindrcpp_0.2    phyloseq_1.22.3 HTSSIP_1.3.2    ggplot2_2.2.1  
+## [1] bindrcpp_0.2    phyloseq_1.20.0 HTSSIP_1.4.0    ggplot2_2.2.1  
 ## [5] tidyr_0.7.2     dplyr_0.7.4    
 ## 
 ## loaded via a namespace (and not attached):
@@ -268,7 +268,7 @@ df_res %&gt;%<span class="st"> </span><span class="kw">head</span>(<span class="
 ##  [11] R6_2.2.2                   coenocliner_0.2-2         
 ##  [13] vegan_2.4-4                rpart_4.1-11              
 ##  [15] Hmisc_4.0-3                DBI_0.7                   
-##  [17] lazyeval_0.2.1             BiocGenerics_0.22.1       
+##  [17] lazyeval_0.2.0             BiocGenerics_0.22.1       
 ##  [19] mgcv_1.8-22                colorspace_1.3-2          
 ##  [21] permute_0.9-4              ade4_1.7-8                
 ##  [23] nnet_7.3-12                tidyselect_0.2.2          
@@ -288,8 +288,8 @@ df_res %&gt;%<span class="st"> </span><span class="kw">head</span>(<span class="
 ##  [51] RCurl_1.95-4.8             magrittr_1.5              
 ##  [53] GenomeInfoDbData_0.99.0    Formula_1.2-2             
 ##  [55] biomformat_1.4.0           Matrix_1.2-11             
-##  [57] Rcpp_0.12.14               munsell_0.4.3             
-##  [59] S4Vectors_0.14.7           ape_5.0                   
+##  [57] Rcpp_0.12.16               munsell_0.4.3             
+##  [59] S4Vectors_0.14.7           ape_4.1                   
 ##  [61] stringi_1.1.5              yaml_2.1.14               
 ##  [63] MASS_7.3-47                SummarizedExperiment_1.6.5
 ##  [65] zlibbioc_1.22.0            rhdf5_2.20.0              
