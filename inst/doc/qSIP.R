@@ -25,7 +25,9 @@ phyloseq::otu_table(physeq_rep3_t) %>% .[1:5, 1:5]
 ## ------------------------------------------------------------------------
 # The 'Treatment' column designates treatment vs control
 # The 'Replicate' column designates treatment replicates
-physeq_rep3 %>% sample_data %>% dplyr::select(Treatment, Replicate) %>% distinct
+data.frame(sample_data(physeq_rep3)) %>%
+  dplyr::select(Treatment, Replicate) %>%
+  distinct
 
 ## ------------------------------------------------------------------------
 atomX = qSIP_atom_excess(physeq_rep3_t,
